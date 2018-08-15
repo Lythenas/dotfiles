@@ -1,0 +1,48 @@
+[submodule "vim/.vim/pack/colorschemes/opt/vim-colors-solarized"]
+	path = vim/.vim/pack/colorschemes/opt/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized
+[submodule "vim/.vim/pack/trying-out/start/ale"]
+	path = vim/.vim/pack/trying-out/start/ale
+	url = https://github.com/w0rp/ale
+[submodule "vim/.vim/pack/trying-out/start/indentLine"]
+	path = vim/.vim/pack/trying-out/start/indentLine
+	url = https://github.com/Yggdroot/indentLine
+[submodule "vim/.vim/pack/trying-out/start/vim-airline"]
+	path = vim/.vim/pack/trying-out/start/vim-airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "vim/.vim/pack/trying-out/start/vim-better-whitespace"]
+	path = vim/.vim/pack/trying-out/start/vim-better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace
+[submodule "vim/.vim/pack/trying-out/start/vim-commentary"]
+	path = vim/.vim/pack/trying-out/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule "vim/.vim/pack/trying-out/start/vim-fugitive"]
+	path = vim/.vim/pack/trying-out/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
+[submodule "vim/.vim/pack/trying-out/start/vim-highlightedyank"]
+	path = vim/.vim/pack/trying-out/start/vim-highlightedyank
+	url = https://github.com/machakann/vim-highlightedyank
+[submodule "vim/.vim/pack/using/start/goyo.vim"]
+	path = vim/.vim/pack/using/start/goyo.vim
+	url = https://github.com/junegunn/goyo.vim
+[submodule "vim/.vim/pack/using/start/rust.vim"]
+	path = vim/.vim/pack/using/start/rust.vim
+	url = https://github.com/rust-lang/rust.vim
+[submodule "vim/.vim/pack/using/start/tabular"]
+	path = vim/.vim/pack/using/start/tabular
+	url = https://github.com/godlygeek/tabular
+[submodule "vim/.vim/pack/using/start/vim-gitgutter"]
+	path = vim/.vim/pack/using/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
+[submodule "vim/.vim/pack/using/start/vim-markdown"]
+	path = vim/.vim/pack/using/start/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown
+[submodule "vim/.vim/pack/using/start/vim-orgmode"]
+	path = vim/.vim/pack/using/start/vim-orgmode
+	url = https://github.com/jceb/vim-orgmode
+[submodule "vim/.vim/pack/using/start/vim-speeddating"]
+	path = vim/.vim/pack/using/start/vim-speeddating
+	url = https://github.com/tpope/vim-speeddating
+[submodule "vim/.vim/pack/using/start/vim-surround"]
+	path = vim/.vim/pack/using/start/vim-surround
+	url = https://github.com/tpope/vim-surround
