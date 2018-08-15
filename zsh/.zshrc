@@ -1,9 +1,7 @@
 export PATH=$HOME/bin:$HOME/.cargo/bin:$PATH
-. /etc/locale.conf
-export LANG
 
 # Antigen
-source /usr/share/zsh/share/antigen.zsh
+source ~/.zsh/antigen.zsh
 antigen use oh-my-zsh
 
 # Plugins
