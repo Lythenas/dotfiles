@@ -14,5 +14,5 @@ I prefer to clone this repo to `~/dotfiles` but you could choose a different loc
 
 ### Vim
 
-I use the native package manager of vim 8 (see https://shapeshed.com/vim-packages/ for a description). This means that all vim packages are git repositories themselves and are included as submodules in this repository. To update those packages you can `cd` into their directories and `git pull` manually. Or to update all of them at once use `git submodule update --remote`.
+I use the native package manager of vim 8 (see https://shapeshed.com/vim-packages/ for a description). This means that all vim packages are git repositories themselves and are included as submodules in this repository. Before you can use any of the packages you need to run `git submodule init && git submodule update --remote`. To update the submodules use `git submodule update --remote` in this repository.
 
