@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:$HOME/.cargo/bin:$PATH
+source ~/.profile
 
 # Antigen
 source ~/.zsh/antigen.zsh
