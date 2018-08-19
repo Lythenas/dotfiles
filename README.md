@@ -30,3 +30,8 @@ I use zsh instead of bash.
 
 Install with `stow zsh`.
 
+### tmux
+
+[tmux](https://github.com/tmux/tmux) is a terminal multiplexer. I use it to not have to open up multiple terminal windows.
+
+Install with `stow tmux`.
