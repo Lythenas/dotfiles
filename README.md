@@ -8,7 +8,7 @@ I prefer to clone this repo to `~/dotfiles` but you could choose a different loc
 
 1. `git clone https://github.com/Lythenas/dotfiles ~/dotfiles`
 1. `cd ~/dotfiles`
-1. run `stow $package` for every `$package` you want to use the config
+1. run `stow $package` for every `$package` you want to use the config (you still have to install the package from your package manager)
 
 ## Included Configs
 
