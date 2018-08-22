@@ -49,3 +49,24 @@
 [submodule "nvim/.local/share/nvim/site/pack/colorschemes/opt/vim-colors-solarized"]
 	path = nvim/.local/share/nvim/site/pack/colorschemes/opt/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule "nvim/.local/share/nvim/site/pack/plugins/start/vim-repeat"]
+	path = nvim/.local/share/nvim/site/pack/plugins/start/vim-repeat
+	url = https://github.com/tpope/vim-repeat
+[submodule "nvim/.local/share/nvim/site/pack/plugins/start/vim-gitgutter"]
+	path = nvim/.local/share/nvim/site/pack/plugins/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
+[submodule "nvim/.local/share/nvim/site/pack/plugins/start/vim-surround"]
+	path = nvim/.local/share/nvim/site/pack/plugins/start/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "nvim/.local/share/nvim/site/pack/plugins/start/vim-speeddating"]
+	path = nvim/.local/share/nvim/site/pack/plugins/start/vim-speeddating
+	url = https://github.com/tpope/vim-speeddating
+[submodule "nvim/.local/share/nvim/site/pack/plugins/start/vim-airline"]
+	path = nvim/.local/share/nvim/site/pack/plugins/start/vim-airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "nvim/.local/share/nvim/site/pack/plugins/start/vim-fugitive"]
+	path = nvim/.local/share/nvim/site/pack/plugins/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
+[submodule "nvim/.local/share/nvim/site/pack/plugins/start/terminus"]
+	path = nvim/.local/share/nvim/site/pack/plugins/start/terminus
+	url = https://github.com/wincent/terminus
