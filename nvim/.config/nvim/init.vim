@@ -78,7 +78,8 @@ nmap <Leader>s :%s//g<Left><Left>
 " vim-repeat: Adds repeat support (with .) for plugins
 "
 " vim-gitgutter: Adds diff signs for git
-"
+set updatetime=100
+
 " vim-fugitive: A git wrapper
 "  - :Gdiff
 "  - Display git status with :Gstatus
@@ -98,10 +99,23 @@ nmap <Leader>s :%s//g<Left><Left>
 "  - enables mouse and enables focus reporting (not needed with neovim)
 "  - better paste
 "
+"  rust.vim: Syntax support for rust
+"
+" syntastic: Syntax checking
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"
 " PLUGINS }}}
 
 " TODO figure out
 "  - vim-surround
+"  - syntastic
 "
 " TODO check out
 "  - https://github.com/Shougo/denite.nvim
@@ -111,7 +125,7 @@ nmap <Leader>s :%s//g<Left><Left>
 "  - https://github.com/lervag/vimtex
 "  - https://github.com/junegunn/vim-easy-align
 "  - https://github.com/tpope/vim-unimpaired
-"  - https://github.com/vim-syntastic/syntastic
+"  - 
 "  - https://github.com/ctrlpvim/ctrlp.vim
 "  - https://github.com/janko-m/vim-test
 "  - https://github.com/Valloric/YouCompleteMe
