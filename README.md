@@ -18,6 +18,12 @@ I use the native package manager of vim 8 (see https://shapeshed.com/vim-package
 
 Install with `stow vim`.
 
+### Neovim
+
+I use [Plug](https://github.com/junegunn/vim-plug) to manage my nvim plugins. All plugins are configured in `.config/nvim/init.vim` and are downloaded with `:PlugInstall` in nvim.
+
+Install with `stow nvim`.
+
 ### Alacritty
 
 [Alacritty](https://github.com/jwilm/alacritty) is a terminal emulator written in rust. I use it in combination with tmux to enable mouse scrolling.
