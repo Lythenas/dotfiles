@@ -53,13 +53,24 @@ Plug 'https://github.com/rust-lang/rust.vim'
 " Color scheme
 Plug 'https://github.com/altercation/vim-colors-solarized'
 
+" Org mode
+Plug 'https://github.com/jceb/vim-orgmode'
+
+" Syntax range (multiple filetypes in different regions)
+Plug 'https://github.com/vim-scripts/SyntaxRange'
+
 call plug#end()
 
 " TODO figure out
 "  - vim-surround
 "  - syntastic
+"  - vim-razer
+"  - vim-plug
+"  - vim-orgmode
+"  - SyntaxRange
 
 " TODO check out
+"  - https://github.com/junegunn/goyo.vim
 "  - https://github.com/Shougo/denite.nvim
 "  - https://github.com/neomake/neomake
 "  - https://github.com/svermeulen/vim-easyclip
@@ -73,6 +84,7 @@ call plug#end()
 
 " TODO figure out more in depth
 "  - vim-fugitive
+"  - vim-gitgutter
 """ PLUGINS }}}
 
 """ {{{ COLOR THEME
