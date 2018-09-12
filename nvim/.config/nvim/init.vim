@@ -3,6 +3,10 @@
 """ {{{ PLUGINS
 call plug#begin('~/.local/share/nvim/plugged')
 
+" update plugins from the comand line with:
+" env SHELL=$(which sh) nvim +PlugInstall +PlugClean +PlugUpdate
+" +UpdateRemotePlugins
+
 " vim-surround: Support for surrounding text with quotes, etc.
 Plug 'https://github.com/tpope/vim-surround'
 
@@ -36,19 +40,27 @@ Plug 'https://github.com/wincent/terminus'
 "  - enables mouse and enables focus reporting (not needed with neovim)
 "  - better paste
 
-" syntastic: Syntax checking
-Plug 'https://github.com/vim-syntastic/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" ale: Linter
+let g:ale_linters = {'rust': ['rls', 'cargo']}
+let g:ale_lint_delay = 1000
+Plug 'https://github.com/w0rp/ale'
+" always show signcolumn
+autocmd BufRead,BufNewFile * setlocal signcolumn=yes
+"autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 
 " rust.vim: Syntax support for rust
 Plug 'https://github.com/rust-lang/rust.vim'
+
+" vim-razer: Razer support for naivating and code completion in rust
+Plug 'https://github.com/racer-rust/vim-racer'
+set hidden
+"let g:racer_experimental_completer = 1
+
+" vim-cargo: Add vim commands to execute cargo commands
+Plug 'https://github.com/timonv/vim-cargo'
+
+" Highlight yanked region
+Plug 'https://github.com/machakann/vim-highlightedyank'
 
 " Color scheme
 Plug 'https://github.com/altercation/vim-colors-solarized'
@@ -56,8 +68,17 @@ Plug 'https://github.com/altercation/vim-colors-solarized'
 " Org mode
 Plug 'https://github.com/jceb/vim-orgmode'
 
+" Universal text linking
+Plug 'https://github.com/vim-scripts/utl.vim'
+
 " Syntax range (multiple filetypes in different regions)
 Plug 'https://github.com/vim-scripts/SyntaxRange'
+
+" vim-ledger: Ledger filetype
+Plug 'https://github.com/ledger/vim-ledger'
+
+" Base16 color schemes support
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -87,11 +108,11 @@ call plug#end()
 "  - vim-gitgutter
 """ PLUGINS }}}
 
-""" {{{ COLOR THEME
-set background=dark
-let g:solarized_termtrans=1
-colorscheme solarized
-""" COLOR THEME }}}
+""" {{{ COLORSCHEME
+set termguicolors
+let base16colorspace=256
+source ~/.config/nvim/colorscheme.vim
+""" COLORSCHEME }}}
 
 """ {{{ BASICS
 " change the leader key

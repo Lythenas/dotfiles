@@ -8,7 +8,7 @@ antigen use oh-my-zsh
 antigen bundle common-aliases
 antigen bundle git
 antigen bundle git-extras
-antigen bundle comman-not-found
+antigen bundle command-not-found
 antigen bundle gradle
 antigen bundle colored-man-pages
 antigen bundle encode64
@@ -19,7 +19,7 @@ antigen bundle python
 antigen bundle djui/alias-tips
 
 # TODO add check for distribution
-antigen bundle archlinux
+#antigen bundle archlinux
 #antigen bundle dnf
 #antigen bundle suse
 
@@ -45,10 +45,15 @@ antigen theme ys
 
 antigen apply
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
-
 # Zsh
 setopt COMPLETE_ALIASES
 
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/exports.zsh
+
+# Colorscheme
+# Base16 Shell
+BASE16_SHELL="$HOME/.base16-manager/chriskempson/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+    eval "$("$BASE16_SHELL/profile_helper.sh")"
