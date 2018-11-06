@@ -26,8 +26,8 @@ window:
   # Units are physical pixels; this is not DPI aware.
   # (change requires restart)
   padding:
-    x: 2
-    y: 2
+    x: 0
+    y: 0
 
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
@@ -61,24 +61,24 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Fira Code
+    family: SauceCodePro Nerd Font
     # Style can be specified to pick a specific face.
     style: Regular
 
   # The bold font face
   bold:
-    family: Fira Code
+    family: SauceCodePro Nerd Font
     # Style can be specified to pick a specific face.
     style: Bold
 
   # The italic font face
   italic:
-    family: Fira Code
+    family: SauceCodePro Nerd Font
     # Style can be specified to pick a specific face.
     style: Italic
 
   # Point size of the font
-  size: 12.0
+  size: 14.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -90,7 +90,7 @@ font:
   # the default being at the bottom. Increase the x offset to move the glyph to
   # the right, increase the y offset to move the glyph upward.
   glyph_offset:
-    x: 0
+    x: -1 # fixes the strange border to the left of glyphs in the status bar of e.g. vim
     y: 0
 
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
@@ -103,42 +103,77 @@ render_timer: false
 
 # Use custom cursor colors. If true, display the cursor in the cursor.foreground
 # and cursor.background colors, otherwise invert the colors of the cursor.
-custom_cursor_colors: true
+custom_cursor_colors: false
 
-# Base16 Atelier Dune 256 - alacritty color config
-# Bram de Haan (http://atelierbramdehaan.nl)
+# Base16 Zenburn 256 - alacritty color config
+# elnawe
 colors:
   # Default colors
   primary:
-    background: '0x20201d'
-    foreground: '0xa6a28c'
+    background: '0x3f3f3f'
+    foreground: '0xdcdccc'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0x20201d'
-    cursor: '0xa6a28c'
+    text: '0x3f3f3f'
+    cursor: '0xdcdccc'
 
   # Normal colors
   normal:
-    black:   '0x20201d'
-    red:     '0xd73737'
-    green:   '0x60ac39'
-    yellow:  '0xae9513'
-    blue:    '0x6684e1'
-    magenta: '0xb854d4'
-    cyan:    '0x1fad83'
-    white:   '0xa6a28c'
+    black:   '0x3f3f3f'
+    red:     '0xdca3a3'
+    green:   '0x5f7f5f'
+    yellow:  '0xe0cf9f'
+    blue:    '0x7cb8bb'
+    magenta: '0xdc8cc3'
+    cyan:    '0x93e0e3'
+    white:   '0xdcdccc'
 
   # Bright colors
   bright:
-    black:   '0x7d7a68'
-    red:     '0xd73737'
-    green:   '0x60ac39'
-    yellow:  '0xae9513'
-    blue:    '0x6684e1'
-    magenta: '0xb854d4'
-    cyan:    '0x1fad83'
-    white:   '0xa6a28c'
+    black:   '0x8f8f8f'
+    red:     '0xdca3a3'
+    green:   '0x5f7f5f'
+    yellow:  '0xe0cf9f'
+    blue:    '0x7cb8bb'
+    magenta: '0xdc8cc3'
+    cyan:    '0x93e0e3'
+    white: '0xdcdccc'
+
+# # Base16 Atelier Dune 256 - alacritty color config
+# # Bram de Haan (http://atelierbramdehaan.nl)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x20201d'
+#     foreground: '0xa6a28c'
+# 
+#   # Colors the cursor will use if `custom_cursor_colors` is true
+#   cursor:
+#     text: '0x20201d'
+#     cursor: '0xa6a28c'
+# 
+#   # Normal colors
+#   normal:
+#     black:   '0x20201d'
+#     red:     '0xd73737'
+#     green:   '0x60ac39'
+#     yellow:  '0xae9513'
+#     blue:    '0x6684e1'
+#     magenta: '0xb854d4'
+#     cyan:    '0x1fad83'
+#     white:   '0xa6a28c'
+# 
+#   # Bright colors
+#   bright:
+#     black:   '0x7d7a68'
+#     red:     '0xd73737'
+#     green:   '0x60ac39'
+#     yellow:  '0xae9513'
+#     blue:    '0x6684e1'
+#     magenta: '0xb854d4'
+#     cyan:    '0x1fad83'
+#     white:   '0xa6a28c'
 
 ## Colors (Solarized Dark)
 #colors:
@@ -196,7 +231,7 @@ visual_bell:
   duration: 0
 
 # Background opacity
-background_opacity: 0.95
+background_opacity: 0.85
 
 # Mouse bindings
 #
@@ -310,7 +345,7 @@ key_bindings:
   - { key: Q,        mods: Command|Alt,      action: Quit                }
   - { key: Insert,   mods: Shift,   action: PasteSelection               }
   - { key: Key0,     mods: Control, action: ResetFontSize                }
-  - { key: Equals,   mods: Control, action: IncreaseFontSize             }
+  - { key: Add,      mods: Control, action: IncreaseFontSize             }
   - { key: Subtract, mods: Control, action: DecreaseFontSize             }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
