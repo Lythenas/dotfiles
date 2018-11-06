@@ -12,17 +12,15 @@ I prefer to clone this repo to `~/dotfiles` but you could choose a different loc
 
 ## Included Configs
 
-### Vim
+### Vim / Neovim
 
-I use the native package manager of vim 8 (see https://shapeshed.com/vim-packages/ for a description). This means that all vim packages are git repositories themselves and are included as submodules in this repository. Before you can use any of the packages you need to run `git submodule init && git submodule update --remote`. To update the submodules use `git submodule update --remote` in this repository.
+I use SpaceVim with my own configuration for both vim and nvim.
 
-Install with `stow vim`.
+Vim needs version >8 and `+python3`.
 
-### Neovim
+Install with `stow spacevim`.
 
-I use [Plug](https://github.com/junegunn/vim-plug) to manage my nvim plugins. All plugins are configured in `.config/nvim/init.vim` and are downloaded with `:PlugInstall` in nvim.
-
-Install with `stow nvim`.
+I kepts my old nvim config in this repo. Install them with `stow nvim`. **Note:** you should probably not use both configurations at the same time.
 
 ### Alacritty
 
