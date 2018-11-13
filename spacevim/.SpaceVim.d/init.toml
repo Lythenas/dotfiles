@@ -23,6 +23,9 @@ statusline_inactive_separator = "arrow"
 buffer_index_type = 4
 enable_tabline_filetype_icon = true
 enable_statusline_display_mode = false
+github_username = "lythenas"
+bootstrap_before = "myspacevim#before"
+bootstrap_after = "myspacevim#after"
 disabled_plugins = []
 
 # Better default config
