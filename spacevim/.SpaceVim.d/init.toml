@@ -26,7 +26,7 @@ enable_statusline_display_mode = false
 github_username = "lythenas"
 bootstrap_before = "myspacevim#before"
 bootstrap_after = "myspacevim#after"
-disabled_plugins = []
+disabled_plugins = ["markdown-preview.vim"]
 
 # Better default config
 [[layers]]
@@ -134,4 +134,12 @@ name = "tools"
 # This is an example for adding custom plugins lilydjwg/colorizer
 [[custom_plugins]]
 name = "lilydjwg/colorizer"
+merged = 0
+
+[[custom_plugins]]
+name = "junegunn/vim-easy-align"
+merged = 0
+
+[[custom_plugins]]
+name = "SpaceVim/org-mode"
 merged = 0
