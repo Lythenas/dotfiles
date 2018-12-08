@@ -143,3 +143,7 @@ merged = 0
 [[custom_plugins]]
 name = "SpaceVim/org-mode"
 merged = 0
+
+[[custom_plugins]]
+name = "pest-parser/pest.vim"
+merged = 0
