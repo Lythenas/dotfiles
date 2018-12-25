@@ -39,3 +39,9 @@ Install with `stow zsh`.
 [tmux](https://github.com/tmux/tmux) is a terminal multiplexer. I use it to not have to open up multiple terminal windows.
 
 Install with `stow tmux`.
+
+### Xmonad
+
+[xmonad](https://xmonad.org/) is a tiling window manager written and configured in haskell.
+
+Install with `stow xmonad`.
