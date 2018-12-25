@@ -1,5 +1,6 @@
 func! myspacevim#before() abort
   let g:python_host_prog = "/usr/bin/python2"
+  set autoread
 endf
 
 func! myspacevim#after() abort
