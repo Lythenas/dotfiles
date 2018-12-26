@@ -9,6 +9,7 @@ import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Prompt.AppLauncher
 import XMonad.Prompt.XMonad
 import XMonad.Layout.NoBorders
+import qualified XMonad.StackSet as W
 import Graphics.X11.ExtraTypes.XF86
 import System.IO
 import Data.Maybe (maybeToList)
@@ -20,20 +21,22 @@ main = do
       { terminal    = "alacritty"
       , modMask     = superMask
       , borderWidth = 3
-      , manageHook  = manageDocks <+> myManageHook <+> manageHook defaultConfig
+      , manageHook  = myManageHook <+> manageHook defaultConfig
       , handleEventHook = fullscreenEventHook
       , startupHook = addEWMHFullscreen
       , layoutHook  = myLayout
       , logHook = dynamicLogWithPP xmobarPP
                       { ppOutput = hPutStrLn xmproc
-                      , ppTitle  = xmobarColor "green" "" . shorten 50
+                      , ppTitle  = xmobarColor "green" "" . shorten 100
                       }
       } `additionalKeys` myAdditionalKeys
 
 superMask = mod4Mask
 
 myManageHook = composeAll
-    [ className =? "Gimp" --> doFloat ]
+    [ className =? "Gimp" --> doFloat
+    , className =? "Thunderbird" --> doF (W.shift "9")
+    ]
 
 -- Layout:
 --   -- Tall (with statusbar and borders)
@@ -89,7 +92,8 @@ myAdditionalKeys =
     , ((0, xF86XK_LaunchA), spawn "notify-send LaunchA")
     , ((0, xF86XK_Explorer), spawn "notify-send Explorer")
 
-    , ((superMask, xK_F12), xmonadPrompt def)
+    , ((superMask, xK_b), sendMessage ToggleStruts)
+    --, ((superMask, xK_m), withFocused $ sendMessage . maximizeRestore)
     ]
 
 lockCommand = "xscreensaver-command -lock"
