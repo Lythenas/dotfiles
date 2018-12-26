@@ -1,0 +1,72 @@
+Config  { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+        , bgColor = "black"
+        , fgColor = "grey"
+        , position = TopW L 100
+        , lowerOnStart = True
+        , hideOnStart = False
+        -- systray (external)
+        , commands  = [ Run Weather "ETHL"
+                          [ "-t", " <tempC>C"
+                          , "-L", "64"
+                          , "-H", "77"
+                          , "--normal", "green"
+                          , "--high", "red"
+                          , "--low", "lightblue"
+                          ] 36000
+                      , Run Alsa "default" "Master"
+                          [ "-t", "Vol: <volume>% <status>"
+                          , "--"
+                          , "--alsactl=/bin/alsactl"
+                          ]
+                      , Run Alsa "default" "Capture"
+                          [ "-t", "Mic: <volume>% <status>"
+                          , "--"
+                          , "--alsactl=/bin/alsactl"
+                          ]
+                      , Run Cpu
+                          [ "-t", "Cpu: <total>%"
+                          , "-L", "3"
+                          , "-H", "50"
+                          , "--normal", "green"
+                          , "--high", "red"
+                          , "-p", "2"
+                          ] 10
+                      , Run Memory
+                          [ "-t", "Mem: <usedratio>%"
+                          , "-p", "2"
+                          ] 10
+                      , Run Swap
+                          [ "-p", "2"
+                          ] 10
+                      , Run DiskU
+                          [("/", "<fc=blue>/</fc> <used>/<size>")]
+                          [ "-p", "3"
+                          ] 10
+                      , Run BatteryP ["BAT0", "BAT1"]
+                          [ "-t", "Batt: <acstatus> <left>% / <timeleft>"
+                          , "-L", "10"
+                          , "--low", "red"
+                          , "--"
+                          , "-p", "green"
+                          , "-O", "<fc=green>charging</fc>"
+                          , "-i", "full"
+                          , "-o", ""
+                          ] 10
+                      , Run CoreTemp
+                          [ "-t", "Temp: <core0>C"
+                          , "-H", "70"
+                          , "--high", "red"
+                          ] 10
+                      , Run Date "%Y-%m-%d %a <fc=#ee9a00>%H:%M:%S</fc>"
+                          "date" 10
+                      , Run Wireless "wlp4s0"
+                          [ "-t", "<fc=green><essid></fc> <quality>%"
+                          ] 10
+                      , Run Network "enp0s31f6" [ "-t", "<dev>" ] 10
+                      , Run Com "/home/ms/scripts/trayer-padding-icon.sh" [] "trayerpad" 10
+                      , Run StdinReader
+                      ]
+        , sepChar = "%"
+        , alignSep = "}{"
+        , template = "%StdinReader% }{ %alsa:default:Master% %alsa:default:Capture% | %cpu% %coretemp% | %memory% * %swap% | %disku% | %wlp4s0wi% %enp0s31f6% | %battery%   %date% %trayerpad%"
+        }
