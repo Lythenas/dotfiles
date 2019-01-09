@@ -1,4 +1,4 @@
-Config  { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+Config  { font = "xft:Hasklug Nerd Font:size=9:bold:antialias=true"
         , bgColor = "black"
         , fgColor = "grey"
         , position = TopW L 100
@@ -48,8 +48,8 @@ Config  { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                           , "--low", "red"
                           , "--"
                           , "-p", "green"
-                          , "-O", "<fc=green>charging</fc>"
-                          , "-i", "full"
+                          , "-O", "<fc=yellow>charging</fc>"
+                          , "-i", "<fc=green>full</fc>"
                           , "-o", ""
                           ] 10
                       , Run CoreTemp
@@ -57,7 +57,7 @@ Config  { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                           , "-H", "70"
                           , "--high", "red"
                           ] 10
-                      , Run Date "%Y-%m-%d %a <fc=#ee9a00>%H:%M:%S</fc>"
+                      , Run Date "<action=`gsimplecal`>%Y-%m-%d %a <fc=#ee9a00>%H:%M:%S</fc></action>"
                           "date" 10
                       , Run Wireless "wlp4s0"
                           [ "-t", "<fc=green><essid></fc> <quality>%"
@@ -68,5 +68,5 @@ Config  { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                       ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%StdinReader% }{ %alsa:default:Master% %alsa:default:Capture% | %cpu% %coretemp% | %memory% * %swap% | %disku% | %wlp4s0wi% %enp0s31f6% | %battery%   %date% %trayerpad%"
+        , template = "%StdinReader% }{ %alsa:default:Master%%alsa:default:Capture% | %cpu% %coretemp% | %memory% * %swap% | %disku% | %wlp4s0wi% %enp0s31f6% | %battery% | %date% %trayerpad%"
         }
