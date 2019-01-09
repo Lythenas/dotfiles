@@ -26,7 +26,7 @@ enable_statusline_display_mode = false
 github_username = "lythenas"
 bootstrap_before = "myspacevim#before"
 bootstrap_after = "myspacevim#after"
-disabled_plugins = ["markdown-preview.vim"]
+#disabled_plugins = ["markdown-preview.vim"]
 
 # Better default config
 [[layers]]
@@ -61,6 +61,10 @@ name ="denite"
 [[layers]]
 name = "git"
 
+[[custom_plugins]]
+name = "airblade/vim-gitgutter"
+merged = 0
+
 ##### Language support
 
 # Bash: npm install -g bash-language-server
@@ -88,6 +92,10 @@ name = "lang#html"
 [[layers]]
 name = "lang#javascript"
 enable_flow_syntax = true
+
+[[custom_plugins]]
+name = "chemzqm/vim-jsx-improve"
+merged = 0
 
 # npm install -g typescript
 [[layers]]
