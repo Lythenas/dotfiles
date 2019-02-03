@@ -26,7 +26,7 @@ enable_statusline_display_mode = false
 github_username = "lythenas"
 bootstrap_before = "myspacevim#before"
 bootstrap_after = "myspacevim#after"
-disabled_plugins = ["markdown-preview.vim"]
+#disabled_plugins = ["markdown-preview.vim"]
 
 # Better default config
 [[layers]]
@@ -60,6 +60,10 @@ name ="denite"
 # Use with SPC g .
 [[layers]]
 name = "git"
+
+[[custom_plugins]]
+name = "airblade/vim-gitgutter"
+merged = 0
 
 ##### Language support
 
