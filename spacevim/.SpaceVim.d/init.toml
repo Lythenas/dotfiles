@@ -93,10 +93,6 @@ name = "lang#html"
 name = "lang#javascript"
 enable_flow_syntax = true
 
-[[custom_plugins]]
-name = "chemzqm/vim-jsx-improve"
-merged = 0
-
 # npm install -g typescript
 [[layers]]
 name = "lang#typescript"
