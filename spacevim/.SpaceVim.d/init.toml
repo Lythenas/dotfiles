@@ -105,7 +105,7 @@ name = "lang#lua"
 
 # Syntax checking: pip install --user flake8
 # Formatting (SPC b f): pip install --user yapf
-# Remove unused imports: pip install --user autpflake
+# Remove unused imports: pip install --user autoflake
 # Sort imports: pip install --user isort
 [[layers]]
 name = "lang#python"
