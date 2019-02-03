@@ -47,6 +47,7 @@ altMask = mod1Mask
 myStartupHook = do
   spawn "feh --bg-scale ~/dotfiles/wallpaper/wallpaper.png"
   spawn "xsetroot -cursor_name left_ptr"
+  spawn "thunderbird"
   addDynamicStatusBar >> addEWMHFullscreen
 
 myManageHook = composeAll
