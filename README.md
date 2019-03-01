@@ -30,9 +30,15 @@ Install with `stow alacritty`.
 
 ### ZSH
 
-I use zsh instead of bash.
+I used zsh. Currently I use fish.
 
 Install with `stow zsh`.
+
+### fish
+
+My shell.
+
+Install with `stow fish`.
 
 ### tmux
 

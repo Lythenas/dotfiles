@@ -227,7 +227,8 @@ live_config_reload: true
 #   args:
 #     - --login
 shell:
-    program: /usr/bin/zsh
+  program: /usr/bin/fish
+  #program: /usr/bin/zsh
 
 # Key bindings
 #

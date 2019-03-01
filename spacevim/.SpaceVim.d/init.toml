@@ -151,3 +151,7 @@ merged = 0
 [[custom_plugins]]
 name = "pest-parser/pest.vim"
 merged = 0
+
+[[custom_plugins]]
+name = "dag/vim-fish"
+merged = 0
