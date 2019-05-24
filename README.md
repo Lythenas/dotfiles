@@ -14,13 +14,9 @@ I prefer to clone this repo to `~/dotfiles` but you could choose a different loc
 
 ### Vim / Neovim
 
-I use SpaceVim with my own configuration for both vim and nvim.
+Includes (most) nvim-gtk configs.
 
-Vim needs version >8 and `+python3`.
-
-Install with `stow spacevim`.
-
-I kepts my old nvim config in this repo. Install them with `stow nvim`. **Note:** you should probably not use both configurations at the same time.
+Install with `stow nvim`.
 
 ### Alacritty
 
