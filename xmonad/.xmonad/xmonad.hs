@@ -31,7 +31,7 @@ main = do
           { terminal    = "alacritty"
           , modMask     = superMask
           , borderWidth = 3
-          , manageHook  = myManageHook <+> manageHook defaultConfig
+          , manageHook  = myManageHook <+> manageHook def
           , handleEventHook = addDynamicStatusBarEH >> fullscreenEventHook
           , startupHook = myStartupHook
           , layoutHook  = myLayout
@@ -218,4 +218,4 @@ help = unlines ["The modifier key is 'super'. Keybindings:",
     "-- Mouse bindings: default actions bound to mouse events",
     "mod-button1  Set the window to floating mode and move by dragging",
     "mod-button2  Raise the window to the top of the stack",
-		"mod-button3  Set the window to floating mode and resize by dragging"]
+    "mod-button3  Set the window to floating mode and resize by dragging"]
