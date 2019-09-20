@@ -17,7 +17,7 @@ trayer --edge top --align right \
   --tint 0x191970 --height 17 --monitor primary &
 
 # Set the background
-xsetroot -solid midnightblue
+xsetroot -solid "#444444"
 
 # Set cursor
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 24

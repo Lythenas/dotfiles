@@ -1,0 +1,24 @@
+
+xmonad.hs:145:92: warning: [-Woverflowed-literals]
+    Literal -10 is out of the GHC.Word.Word32 range 0..4294967295
+    |
+145 |     , ((superMask .|. altMask, xK_h), addName "move left" $ withFocused $ keysMoveWindow (-10, 0))
+    |                                                                                            ^^
+
+xmonad.hs:147:93: warning: [-Woverflowed-literals]
+    Literal -10 is out of the GHC.Word.Word32 range 0..4294967295
+    |
+147 |     , ((superMask .|. altMask, xK_k), addName "move up" $ withFocused $ keysMoveWindow (0, -10))
+    |                                                                                             ^^
+
+xmonad.hs:150:95: warning: [-Woverflowed-literals]
+    Literal -10 is out of the GHC.Word.Word32 range 0..4294967295
+    |
+150 |     , ((superMask .|. altMask, xK_minus), addName "shrink" $ withFocused $ keysResizeWindow (-10, -10) (1%2, 1%2))
+    |                                                                                               ^^
+
+xmonad.hs:150:100: warning: [-Woverflowed-literals]
+    Literal -10 is out of the GHC.Word.Word32 range 0..4294967295
+    |
+150 |     , ((superMask .|. altMask, xK_minus), addName "shrink" $ withFocused $ keysResizeWindow (-10, -10) (1%2, 1%2))
+    |                                                                                                    ^^

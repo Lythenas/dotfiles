@@ -47,3 +47,5 @@ Install with `stow tmux`.
 [xmonad](https://xmonad.org/) is a tiling window manager written and configured in haskell.
 
 Install with `stow xmonad`.
+
+Requires xmonad, xmonad-contrib, xmobar (compiled with flag all_extensions), trayer, dmenu-launch, clipit, deadd-notification-center

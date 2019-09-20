@@ -45,6 +45,7 @@ superMask = mod4Mask
 altMask = mod1Mask
 
 myStartupHook = do
+  spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --transparent true --tint 0x191970 --height 17 --monitor primary"
   spawn "feh --bg-scale ~/dotfiles/wallpaper/wallpaper.png"
   spawn "xsetroot -cursor_name left_ptr"
   spawn "thunderbird"
@@ -68,7 +69,7 @@ myManageHook = composeAll
 --   -- Full (no statusbar and no borders)
 myLayout = maximizeWithPadding 0
     $ smartBorders
-    $ avoidStruts (tiled ||| Mirror tiled) ||| noBorders Full
+    $ avoidStruts (tiled ||| Mirror tiled) ||| Tall 0 (3/100) (1/2) ||| noBorders Full
     where
         tiled = Tall nmaster delta ratio
         nmaster = 1
@@ -98,7 +99,7 @@ addDynamicStatusBar = dynStatusBarStartup dynStatusBar dynStatusBarCleanup
 addDynamicStatusBarEH = dynStatusBarEventHook dynStatusBar dynStatusBarCleanup
 
 dynStatusBar :: DynamicStatusBar
-dynStatusBar (S screenId) = spawnPipe $ "~/.cabal/bin/xmobar --screen=" ++ show screenId
+dynStatusBar (S screenId) = spawnPipe $ "~/.local/bin/xmobar --screen=" ++ show screenId
 
 dynStatusBarCleanup :: DynamicStatusBarCleanup
 dynStatusBarCleanup = return ()
@@ -121,12 +122,16 @@ myKeyMap = const
     -- Media Keys
     , subtitle "media keys"
     , ((0, xF86XK_AudioLowerVolume), addName "lower volume" $ spawn "amixer set Master 5%-")
+    , ((shiftMask, xF86XK_AudioLowerVolume), addName "lower volume" $ spawn "amixer set Master 1%-")
     , ((0, xF86XK_AudioRaiseVolume), addName "raise volume" $ spawn "amixer set Master 5%+")
+    , ((shiftMask, xF86XK_AudioRaiseVolume), addName "raise volume" $ spawn "amixer set Master 1%+")
     , ((0, xF86XK_AudioMute), addName "mute volume" $ spawn "amixer set Master toggle")
     , ((0, xF86XK_AudioMicMute), addName "mute mic" $ spawn "amixer set Capture toggle")
     , separator
     , ((0, xF86XK_MonBrightnessUp), addName "lower brightness" $ spawn "xbacklight +5")
+    , ((shiftMask, xF86XK_MonBrightnessUp), addName "lower brightness" $ spawn "xbacklight +1")
     , ((0, xF86XK_MonBrightnessDown), addName "raise brightness" $ spawn "xbacklight -5")
+    , ((shiftMask, xF86XK_MonBrightnessDown), addName "raise brightness" $ spawn "xbacklight -1")
     , ((0, xF86XK_Display), addName "configure display" $ spawn "~/bin/displayselect")
     -- , ((0, xF86XK_WLAN), spawn "notify-send WLAN") -- bound in hardware (on my laptop)
     , separator
