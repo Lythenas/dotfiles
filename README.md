@@ -18,6 +18,10 @@ Includes (most) nvim-gtk configs.
 
 Install with `stow nvim`.
 
+### TabNine autocomplete
+
+Install with `stow tabnine`.
+
 ### Alacritty
 
 [Alacritty](https://github.com/jwilm/alacritty) is a terminal emulator written in rust. I use it in combination with tmux to enable mouse scrolling.

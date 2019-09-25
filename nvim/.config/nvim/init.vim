@@ -9,6 +9,7 @@ set smarttab
 set smartindent
 set autoindent
 set expandtab
+set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set background=dark
@@ -33,6 +34,12 @@ let g:limelight_conceal_ctermfg = 'gray'
 
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
+" Completion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+
+Plug 'lighttiger2505/deoplete-vim-lsp'
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 " Easy align
 " :EasyAlign
@@ -75,35 +82,36 @@ let g:pandoc#syntax#conceal#use = 0
 Plug 'vim-latex/vim-latex'
 
 " LSP
-set hidden
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ }
-    " \ 'haskell': ['hie-wrapper', '--lsp'],
-let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
-function LC_maps()
-    if has_key(g:LanguageClient_serverCommands, &filetype)
-	nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-	" Or map each action separately
-	" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-	" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-	" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-    endif
-endfunction
-autocmd FileType * call LC_maps()
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'vhakulinen/gnvim-lsp'
 
-let g:LanguageClient_trace = "verbose"
-let g:LanguageClient_windowLogMessageLevel = "Log"
-let g:LanguageClient_loggingLevel = 'DEBUG'
-let g:LanguageClient_loggingFile = expand('~/LanguageClient.log')
-let g:LanguageClient_serverStderr = expand('~/LanguageClient-stderr.log')
+" folding
+set foldmethod=expr
+  \ foldexpr=lsp#ui#vim#folding#foldexpr()
+  \ foldtext=lsp#ui#vim#folding#foldtext()
 
-Plug '~/Repositories/gnvim-lsp'
+" signs
+let g:lsp_signs_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+
+" current configs require the pwd to be the root of the project
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+
+if executable('hie-wrapper')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'hie',
+        \ 'cmd': {server_info->['hie-wrapper']},
+        \ 'whitelist': ['haskell', 'hs', 'lhs'],
+        \ })
+endif
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -132,4 +140,3 @@ nnoremap <leader># :Tabularize /#-}<CR>
 
 call plug#end()
 """ END PLUGINS
-

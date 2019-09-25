@@ -1,0 +1,4 @@
+[language.haskell]
+command = "hie-wrapper"
+args = ["--lsp"]
+
