@@ -3,7 +3,6 @@ filetype plugin indent on
 
 set nocompatible
 set number
-set showmode
 set smartcase
 set smarttab
 set smartindent
@@ -12,19 +11,57 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set background=dark
 set laststatus=0
 set mouse=a
 
 " colorscheme darkblue
-hi Keyword ctermfg=darkcyan
-hi Constant ctermfg=5*
-hi Comment ctermfg=2*
-hi Normal ctermbg=none
-hi LineNr ctermfg=darkgrey
+" hi Keyword ctermfg=darkcyan
+" hi Constant ctermfg=5*
+" hi Comment ctermfg=2*
+" hi Normal ctermbg=none
+" hi LineNr ctermfg=darkgrey
 
 """ PLUGINS
 call plug#begin('~/.local/share/nvim/plugged')
+
+" Status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"set laststatus=2
+set noshowmode
+" :AirlineExtensions
+
+let g:airline_theme='deus'
+set background=dark
+set laststatus=2
+
+" defaults for terminal nvim
+colorscheme default
+
+" overwrite defaults for gui nvim
+function! s:ui_enter()
+  if get(v:event, "chan") == 1
+    colorscheme evening
+    set guifont=Iosevka:h16
+    set linespace=2
+  endif
+endfunction
+
+au UIEnter * call s:ui_enter()
+
+" Denite
+Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Defx Filebrowser
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Better writing support
+Plug 'reedes/vim-litecorrect'
+
+augroup litecorrect
+  autocmd!
+  autocmd FileType markdown,md,mkd,pandoc call litecorrect#init()
+augroup END
 
 " Goyo + Limelight
 Plug 'junegunn/goyo.vim'
@@ -34,6 +71,7 @@ let g:limelight_conceal_ctermfg = 'gray'
 
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
+
 " Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
@@ -122,13 +160,30 @@ Plug 'w0rp/ale'
 let g:ale_linters = {'haskell': ['hie', 'hlint', 'stack_build', 'stack_ghc']}
 let g:ale_fixers = {'*': ['trim_whitespace'], 'haskell': ['hlint']}
 
-" Status line
- Plug 'itchyny/lightline.vim'
-set laststatus=2
-set noshowmode
-
 " Git gutter
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+" let g:signify_line_highlight = 1
+" let g:signify_update_on_bufenter = 1
+let g:signify_update_on_focusgained = 1
+
+" highlight lines in Sy and vimdiff etc.)
+
+highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119 gui=bold guibg=none guifg=#87ff5f
+highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167 gui=bold guibg=none guifg=#df5f5f
+highlight DiffChange        cterm=bold ctermbg=none ctermfg=227 gui=bold guibg=none guifg=#ffff5f
+
+" highlight signs in Sy
+
+highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119 gui=bold guibg=#3a3a3a guifg=#87ff5f
+highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167 gui=bold guibg=#3a3a3a guifg=#df5f5f
+highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227 gui=bold guibg=#3a3a3a guifg=#ffff5f
+
+highlight SignColumn ctermbg=none cterm=none guibg=none gui=none
+
+highlight link SignifySignAdd             SignifySignAdd
+highlight link SignifySignChange          SignifySignChange
+highlight link SignifySignDelete          SignifySignDelete
 
 " Tabular
 " allign blocks of code
