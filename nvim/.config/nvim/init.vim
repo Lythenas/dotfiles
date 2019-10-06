@@ -13,6 +13,7 @@ set shiftwidth=2
 set softtabstop=2
 set laststatus=0
 set mouse=a
+set colorcolumn=80,100
 
 " colorscheme darkblue
 " hi Keyword ctermfg=darkcyan
@@ -96,6 +97,10 @@ Plug 'junegunn/fzf.vim'
 " cs"' ds" ysiw] vS}
 Plug 'tpope/vim-surround'
 
+""" LANGUAGES
+Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = []
+
 " JSON
 Plug 'elzr/vim-json'
 
@@ -109,6 +114,9 @@ Plug 'elzr/vim-json'
 " let g:vim_markdown_frontmatter = 1 " for YAML format
 " let g:vim_markdown_toml_frontmatter = 1 " for TOML format
 " let g:vim_markdown_json_frontmatter = 1 " for JSON format
+Plug 'reedes/vim-pencil'
+let g:pencil#conceallevel = 0
+let g:pencil#textwidth = 80
 
 " Pandoc
 Plug 'vim-pandoc/vim-pandoc'
@@ -116,6 +124,11 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 let g:pandoc#folding#mode = 'stacked'
 let g:pandoc#syntax#conceal#use = 0
+
+augroup markdown
+  autocmd!
+  autocmd FileType markdown,mkd,md,pandoc call pencil#init()
+augroup END
 
 Plug 'vim-latex/vim-latex'
 
