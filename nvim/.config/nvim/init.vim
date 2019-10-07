@@ -20,7 +20,9 @@ set colorcolumn=80,100
 " hi Constant ctermfg=5*
 " hi Comment ctermfg=2*
 " hi Normal ctermbg=none
-" hi LineNr ctermfg=darkgrey
+hi LineNr ctermfg=darkgrey
+" set background=dark
+colorscheme evening
 
 """ PLUGINS
 call plug#begin('~/.local/share/nvim/plugged')
