@@ -202,6 +202,11 @@ highlight link SignifySignAdd             SignifySignAdd
 highlight link SignifySignChange          SignifySignChange
 highlight link SignifySignDelete          SignifySignDelete
 
+" Git management
+Plug 'tpope/vim-fugitive'
+" Git commit browser
+Plug 'junegunn/gv.vim'
+
 " Tabular
 " allign blocks of code
 Plug 'godlygeek/tabular'
