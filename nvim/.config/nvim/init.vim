@@ -169,6 +169,10 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
 Plug 'Shougo/echodoc.vim'
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'echo'
