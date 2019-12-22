@@ -1,0 +1,52 @@
+#! /bin/sh
+
+# TODO only start those if they are not already running
+# maybe move to systemd --user
+SXHKD_SHELL=/usr/bin/bash sxhkd &
+
+~/.config/bspwm/bars.sh
+
+picom &
+dunst &
+
+# Start other apps
+syncthing-gtk &
+nm-applet --sm-disable &
+
+# Fix gnome apps and service
+dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+
+# Autolock setup
+xautolock \
+  -time 5 \
+  -locker ~/bin/lock \
+  -notify 5 \
+  -notifier "notify-send --urgency=low --expire-time=5000 'About to lock...' 'Do something you lazy ****!'" \
+
+  #-killtime 5 \
+  #-killer "echo TODO" \
+
+
+
+# bspwm setup
+bspc monitor eDP1 -d 1 2 3 4 5 6
+bspc monitor HDMI2 -d 7 8 9 0
+
+bspc config border_width         2
+bspc config window_gap           0
+
+bspc config normal_border_color '#282828'
+bspc config active_border_color '#f7ca88'
+bspc config focused_border_color '#ab4642'
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a firefox desktop='^1'
+bspc rule -a Thunderbird desktop='^10'
+bspc rule -a Spotify desktop='^9'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
