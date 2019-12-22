@@ -49,22 +49,29 @@ padding-right      = 0
 module-margin-left = 0
 
 font-N = <fontconfig pattern>;<vertical offset>
-font-0 = Iosevka Nerd Font Mono:size=4;2
-#font-0 = Siji:size=4;2
+# default font
+font-0 = scientifica:size=11;1
+#font-0 = Iosevka Nerd Font Mono:size=4;2
+# alt fonts
 font-1 = lemon:pixelsize=10;1
-font-2 = Kochi Gothic:size=4;1
+font-2 = NotoSansDisplay Nerd Font:size=6;2
+# for icons
 font-3 = Iosevka Nerd Font Mono:size=14;7
 font-4 = Iosevka Nerd Font Mono:size=10;3
+font-5 = Iosevka Nerd Font Mono:size=8;3
 
 # music, or, previous playpause next
-modules-left = workspaces
-modules-right  = temp cpu ram volume backlight network battery1 battery2 date
-modules-center = xwindow
+modules-left = workspaces xwindow
+modules-right  = temp cpu ram volume backlight network battery-plugged-in battery-not-plugged-in date
+modules-center = 
 tray-position = left
 
 fixed-center = true
 
-monitor = eDP1
+# specify monitor using environment variabel to be able to easy launch it when
+# using different monitors
+monitor = ${env:MONITOR:}
+# monitor = eDP1
 
 
 ;--------------------------------------------
@@ -92,51 +99,87 @@ label-background = ${colors.modules_bg}
 label-foreground = ${colors.modules_fg}
 label-padding    = 2
 
-[module/battery1]
-type          = internal/battery
-full-at       = 98
-battery       = BAT0
-adapter       = AC0
-poll-interval = 5
+[module/battery-plugged-in]
+type = custom/script
+exec = ~/.config/polybar/battery-combined.sh 1
+interval = 5
 
-# TODO maybe animation charging
-format-charging = <ramp-capacity><label-charging>
-label-charging            = "%percentage%%"
-label-charging-background = ${colors.modules_bg}
-label-charging-foreground = ${colors.modules_fg}
-label-charging-padding    = 4
+format = <label>
 
-format-discharging = <ramp-capacity><label-discharging>
-label-discharging            = "%percentage:3%%"
-label-discharging-background = ${colors.modules_bg}
-label-discharging-foreground = ${colors.modules_fg}
-label-discharging-padding    = 2
+format-prefix = 
+format-prefix-font = 5
+format-prefix-padding = 1
+format-prefix-background = ${colors.battery_p_bg}
+format-prefix-foreground = ${colors.modules_prefix_fg}
 
-format-full = <ramp-capacity><label-full>
-label-full            = "%percentage:3%%"
-label-full-background = ${xrdb:color7}
-label-full-foreground = ${xrdb:color0}
-label-full-padding    = 4
+label = %output%%
+label-background = ${colors.modules_bg}
+label-foreground = ${colors.modules_fg}
+label-padding = 2
 
-ramp-capacity-font = 5
-ramp-capacity-padding = 1
-ramp-capacity-background = ${colors.battery_p_bg}
-ramp-capacity-foreground = ${colors.modules_prefix_fg}
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-ramp-capacity-5 = 
-ramp-capacity-6 = 
-ramp-capacity-7 = 
-ramp-capacity-8 = 
-ramp-capacity-9 = 
-ramp-capacity-10 = 
+[module/battery-not-plugged-in]
+type = custom/script
+exec = ~/.config/polybar/battery-combined.sh 0
+interval = 5
 
-[module/battery2]
-inherit = module/battery1
-battery = BAT1
+format = <label>
+
+format-prefix = 
+format-prefix-font = 6
+format-prefix-padding = 1
+format-prefix-background = ${colors.battery_p_bg}
+format-prefix-foreground = ${colors.modules_prefix_fg}
+
+label = %output%%
+label-background = ${colors.modules_bg}
+label-foreground = ${colors.modules_fg}
+label-padding = 2
+
+# [module/battery1]
+# type          = internal/battery
+# full-at       = 98
+# battery       = BAT0
+# adapter       = AC0
+# poll-interval = 5
+# 
+# # TODO maybe animation charging
+# format-charging = <ramp-capacity><label-charging>
+# label-charging            = "%percentage%%"
+# label-charging-background = ${colors.modules_bg}
+# label-charging-foreground = ${colors.modules_fg}
+# label-charging-padding    = 2
+# 
+# format-discharging = <ramp-capacity><label-discharging>
+# label-discharging            = "%percentage:3%%"
+# label-discharging-background = ${colors.modules_bg}
+# label-discharging-foreground = ${colors.modules_fg}
+# label-discharging-padding    = 2
+# 
+# format-full = <ramp-capacity><label-full>
+# label-full            = "%percentage:3%%"
+# label-full-background = ${xrdb:color7}
+# label-full-foreground = ${xrdb:color0}
+# label-full-padding    = 2
+# 
+# ramp-capacity-font = 5
+# ramp-capacity-padding = 1
+# ramp-capacity-background = ${colors.battery_p_bg}
+# ramp-capacity-foreground = ${colors.modules_prefix_fg}
+# ramp-capacity-0 = 
+# ramp-capacity-1 = 
+# ramp-capacity-2 = 
+# ramp-capacity-3 = 
+# ramp-capacity-4 = 
+# ramp-capacity-5 = 
+# ramp-capacity-6 = 
+# ramp-capacity-7 = 
+# ramp-capacity-8 = 
+# ramp-capacity-9 = 
+# ramp-capacity-10 = 
+# 
+# [module/battery2]
+# inherit = module/battery1
+# battery = BAT1
 
 [module/network]
 type          = internal/network
@@ -280,6 +323,7 @@ format        = <label>
 label         = %title%
 label-maxlen  = 80
 label-padding = 3
+label-font    = 3
 
 [module/previous]
 type = custom/text
@@ -334,8 +378,8 @@ label-song-foreground = ${colors.bar_fg}
 format-online-prefix-padding = 0
 
 [module/workspaces]
-type            = internal/xworkspaces
-#pin-workspaces = true
+type            = internal/bspwm
+pin-workspaces = true
 
 format          = <label-state>
 index-sort      = true
