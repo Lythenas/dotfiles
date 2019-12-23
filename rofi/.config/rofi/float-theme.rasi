@@ -1,0 +1,153 @@
+/**
+ * A floating box version of the paper theme.
+ *
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+* {
+    red:              rgba ( 171, 70, 66, 100 % );
+    blue:             rgba ( 124, 175, 194, 100 % );
+    lightfg:          rgba ( 232, 232, 232, 100 % );
+    lightbg:          rgba ( 40, 40, 40, 100 % );
+    foreground:       rgba ( 216, 216, 216, 100 % );
+    background:       rgba ( 24, 24, 24, 100 % );
+    /* background-color: rgba ( 24, 24, 24, 0 % ); */
+    background-color: #00000000;
+    separatorcolor:              @foreground;
+    border-color:                @foreground;
+    selected-normal-foreground:  @lightbg;
+    selected-normal-background:  @lightfg;
+    selected-active-foreground:  @background;
+    selected-active-background:  @blue;
+    selected-urgent-foreground:  @background;
+    selected-urgent-background:  @red;
+    normal-foreground:           @foreground;
+    normal-background:           @background;
+    active-foreground:           @blue;
+    active-background:           @background;
+    urgent-foreground:           @red;
+    urgent-background:           @background;
+    alternate-normal-foreground: @foreground;
+    alternate-normal-background: @lightbg;
+    alternate-active-foreground: @blue;
+    alternate-active-background: @lightbg;
+    alternate-urgent-foreground: @red;
+    alternate-urgent-background: @lightbg;
+
+    spacing: 2;
+    anchor: north;
+    location: center;
+}
+#window {
+    transparency: "screenshot";
+    background-color: #00000000;
+    border: 0;
+    padding: 0% 0% 1em 0%;
+    x-offset: 0;
+    y-offset: -10%;
+}
+#mainbox {
+    padding: 0px;
+    border: 0;
+    spacing: 1%;
+}
+#message {
+    border: 2px; 
+    padding: 1em; 
+    background-color: @background; 
+    text-color: @forground;
+}
+#textbox normal {
+    text-color: @foreground;
+    padding: 0;
+    border: 0;
+}
+#listview {
+    fixed-height: 1;
+    border: 2px;
+    padding: 1em;
+    reverse: false;
+
+    columns: 1;
+    background-color: @background; 
+}
+#element {
+    border: 0;
+    padding: 2px;
+    highlight: bold ;
+}
+#element normal.normal {
+    text-color: @normal-foreground;
+    background-color: @normal-background;
+}
+#element normal.urgent {
+    text-color: @urgent-foreground;
+    background-color: @urgent-background;
+}
+#element normal.active {
+    text-color: @active-foreground;
+    background-color: @active-background;
+}
+#element selected.normal {
+    text-color: @selected-normal-foreground;
+    background-color: @selected-normal-background;
+}
+#element selected.urgent {
+    text-color: @selected-urgent-foreground;
+    background-color: @selected-urgent-background;
+}
+#element selected.active {
+    text-color: @selected-active-foreground;
+    background-color: @selected-active-background;
+}
+#element alternate.normal {
+    text-color: @alternate-normal-foreground;
+    background-color: @alternate-normal-background;
+}
+#element alternate.urgent {
+    text-color: @alternate-urgent-foreground;
+    background-color: @alternate-urgent-background;
+}
+#element alternate.active {
+    text-color: @alternate-active-foreground;
+    background-color: @alternate-active-background;
+}
+#scrollbar {
+    border: 0;
+    padding: 0;
+    handle-color: @normal-foreground;
+}
+#inputbar {
+    spacing: 0;
+    border: 2px;
+    padding: 0.5em 1em;
+    background-color: @normal-background;
+    text-color: @normal-foreground;
+    index: 0;
+}
+#inputbar normal {
+    foreground-color: @normal-foreground;
+    background-color: @normal-background;
+}
+
+#mode-switcher {
+    border: 2px;
+    padding: 0.5em 1em;
+    background-color: @background;
+    index: 10;
+}
+#button selected {
+    background-color: @selected-normal-background;
+    text-color: @selected-normal-foreground;
+}
+#inputbar {
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+#prompt, textbox-prompt-colon, entry, num-rows, num-filtered-rows {
+  text-color: @foreground;
+}
+#textbox-prompt-colon {
+    expand:     false;
+    str:        ":";
+    margin:     0px 0.3em 0em 0em ;
+}
