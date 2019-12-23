@@ -64,6 +64,7 @@ font-5 = Iosevka Nerd Font Mono:size=8;3
 modules-left = workspaces xwindow
 modules-right  = temp cpu ram volume backlight network battery-plugged-in battery-not-plugged-in date
 modules-center = 
+
 tray-position = left
 
 fixed-center = true
@@ -72,6 +73,8 @@ fixed-center = true
 # using different monitors
 monitor = ${env:MONITOR:}
 # monitor = eDP1
+
+wm-restack = bspwm
 
 
 ;--------------------------------------------
