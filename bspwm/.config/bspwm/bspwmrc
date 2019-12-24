@@ -2,30 +2,42 @@
 
 # TODO only start those if they are not already running
 # maybe move to systemd --user
+killall sxhkd
 SXHKD_SHELL=/usr/bin/bash sxhkd &
 
-~/.config/bspwm/bars.sh
+~/.config/bspwm/bars.sh &
 
+killall picom
 picom &
+killall dunst
 dunst &
 
+feh --no-fehbg --bg-fill ~/.config/bspwm/wallpaper.jpg &
+
 # Start other apps
-syncthing-gtk &
-nm-applet --sm-disable &
+pgrep syncthing-gtk || syncthing-gtk &
+pgrep nm-applet || nm-applet --sm-disable &
 
 # Fix gnome apps and service
-dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+dbus-update-activation-environment \
+  --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
 # Autolock setup
-xautolock \
-  -time 5 \
-  -locker ~/bin/lock \
-  -notify 5 \
-  -notifier "notify-send --urgency=low --expire-time=5000 'About to lock...' 'Do something you lazy ****!'" \
+killall xidlehook
+xidlehook \
+  --not-when-fullscreen \
+  --socket ~/.xidlehook.socket \
+  --timer 270 \
+    'for m in $(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"); do xrandr --output $m --brightness 0.5; done' \
+    'for m in $(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"); do xrandr --output $m --brightness 1; done' \
+  --timer 30 \
+    'for m in $(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"); do xrandr --output $m --brightness 1; done; ~/bin/lock' \
+    '' \
+  --timer 3600 \
+    'systemctl suspend' \
+    '' &
 
-  #-killtime 5 \
-  #-killer "echo TODO" \
-
+mons -a -x ~/.config/bspwm/handle-monitor-change.sh
 
 
 # bspwm setup

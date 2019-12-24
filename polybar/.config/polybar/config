@@ -23,6 +23,7 @@ ram_p_bg     = ${xrdb:color16}
 wifi_p_bg    = ${xrdb:color6}
 backlight_p_bg  = ${xrdb:color11}
 battery_p_bg = ${xrdb:color12}
+update_p_bg = ${xrdb:color9}
 time_p_bg    = ${xrdb:color10}
 temp_p_bg    = ${xrdb:color20}
 temp_warn    = #ff3333
@@ -62,7 +63,7 @@ font-5 = Iosevka Nerd Font Mono:size=8;3
 
 # music, or, previous playpause next
 modules-left = workspaces xwindow
-modules-right  = temp cpu ram volume backlight network battery-plugged-in battery-not-plugged-in date
+modules-right  = updates temp cpu ram volume backlight network battery-plugged-in battery-not-plugged-in date
 modules-center = 
 
 tray-position = left
@@ -318,6 +319,24 @@ format-warn-prefix-font = 5
 format-warn-prefix-padding    = 1
 format-warn-prefix-background = ${colors.temp_warn}
 format-warn-prefix-foreground = ${colors.modules_prefix_fg}
+
+[module/updates]
+type = custom/script
+exec = ~/.config/polybar/updates-arch-combined.sh
+interval = 3600
+
+format = <label>
+
+format-prefix = ﮮ
+format-prefix-font = 5
+format-prefix-padding = 1
+format-prefix-background = ${colors.update_p_bg}
+format-prefix-foreground = ${colors.modules_prefix_fg}
+
+label = %output%
+label-background = ${colors.modules_bg}
+label-foreground = ${colors.modules_fg}
+label-padding = 2
 
 
 [module/xwindow]
