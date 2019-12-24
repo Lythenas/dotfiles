@@ -4,7 +4,7 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty it self.
-env:
+# env:
   # TERM env customization.
   #
   # If this property is not set, alacritty will set it to xterm-256color.
@@ -12,7 +12,7 @@ env:
   # Note that some xterm terminfo databases don't declare support for italics.
   # You can verify this by checking for the presence of `smso` and `sitm` in
   # `infocmp xterm-256color`.
-  TERM: xterm-256color
+  # TERM: xterm-256color
 
 window:
   # Window dimensions in character columns and lines
@@ -104,9 +104,9 @@ colors:
     foreground: '0xd8d8d8'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0xd8d8d8'
-    cursor: '0xd8d8d8'
+  # cursor:
+  #   text: '0x181818'
+  #   cursor: '0xd8d8d8'
 
   # Normal colors
   normal:
@@ -131,7 +131,7 @@ colors:
     white:   '0xf8f8f8'
 
 # When true, bold text is drawn using the bright variant of colors.
-draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 # Visual Bell
 #

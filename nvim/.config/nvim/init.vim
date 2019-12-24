@@ -25,9 +25,7 @@ set termguicolors
 " hi Constant ctermfg=5*
 " hi Comment ctermfg=2*
 " hi Normal ctermbg=none
-hi LineNr ctermfg=darkgrey
-" set background=dark
-colorscheme evening
+" hi LineNr ctermfg=darkgrey
 
 """ PLUGINS
 call plug#begin('~/.local/share/nvim/plugged')
@@ -40,13 +38,17 @@ set noshowmode
 " :AirlineExtensions
 let g:airline#extensions#coc#enabled = 1
 
-
-let g:airline_theme='deus'
+" set colorscheme
+Plug 'chriskempson/base16-vim'
 set background=dark
 set laststatus=2
+let base16colorspace=256
 
-" defaults for terminal nvim
-colorscheme default
+let g:airline_theme='base16'
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline_skip_empty_sections = 1
 
 " overwrite defaults for gui nvim
 function! s:ui_enter()
@@ -217,3 +219,5 @@ nnoremap <leader># :Tabularize /#-}<CR>
 
 call plug#end()
 """ END PLUGINS
+
+colorscheme base16-default-dark
