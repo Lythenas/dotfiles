@@ -1,46 +1,74 @@
 #! /bin/sh
 
-# TODO only start those if they are not already running
-# maybe move to systemd --user
-killall sxhkd
-SXHKD_SHELL=/usr/bin/bash sxhkd &
+echo "=> [$(date --rfc-3339=ns)] Setting up session and bspwm" >&2
 
+# Systemd --user does not properly support this usecase so I start and kill
+# services and apps manually here.
+
+# starts an "app" if it is not already running
+start_app() {
+  pgrep "$1" || "$@" &
+}
+
+# kills (if it is already running) and starts a "service"
+# note this will kill all instance of the running "service"
+start_service() {
+  killall "$1"
+  "$@" &
+}
+
+#
+# services and apps are started (roughly) in order of importance
+#
+
+# keyboard shortcut daemon
+export SXHKD_SHELL=/usr/bin/bash
+start_service sxhkd
+
+# bars are handled by an extra script because the setup is a little more complex
 ~/.config/bspwm/bars.sh &
 
-killall picom
-picom &
-killall dunst
-dunst &
-
-feh --no-fehbg --bg-fill ~/.config/bspwm/wallpaper.jpg &
-
-# Start other apps
-pgrep syncthing-gtk || syncthing-gtk &
-pgrep nm-applet || nm-applet --sm-disable &
-
-# Fix gnome apps and service
-dbus-update-activation-environment \
-  --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
-
-# Autolock setup
-killall xidlehook
-xidlehook \
+# autolock setup
+# locks after 5min, dims screen 30sec before that and suspends 1h after lock
+rm ~/.xidlehook.socket
+start_service xidlehook \
   --not-when-fullscreen \
   --socket ~/.xidlehook.socket \
   --timer 270 \
     'for m in $(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"); do xrandr --output $m --brightness 0.5; done' \
     'for m in $(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"); do xrandr --output $m --brightness 1; done' \
   --timer 30 \
-    'for m in $(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"); do xrandr --output $m --brightness 1; done; ~/bin/lock' \
+    'for m in $(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"); do xrandr --output $m --brightness 1; done; ~/.config/bspwm/run-locker.sh' \
     '' \
   --timer 3600 \
     'systemctl suspend' \
-    '' &
+    ''
 
-mons -a -x ~/.config/bspwm/handle-monitor-change.sh
+# compositor
+start_service picom
+# notifications
+start_service dunst
+
+# set background
+feh --no-fehbg --bg-fill ~/.config/bspwm/wallpaper.jpg &
+
+# start other apps
+start_app syncthing-gtk
+start_app nm-applet --sm-disable
+
+# fix gnome apps and service
+# TODO not sure if needed with bspwn
+dbus-update-activation-environment \
+  --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
 
+# TODO this is not ideal because it immediately calls the script
+mons -a -x ~/.config/bspwm/handle-monitor-change.sh &
+
+#
 # bspwm setup
+#
+
 bspc monitor eDP1 -d 1 2 3 4 5 6
 bspc monitor HDMI2 -d 7 8 9 0
 
@@ -57,6 +85,7 @@ bspc config gapless_monocle      true
 
 bspc config automatic_scheme longest_side
 
+# TODO some of these do not work
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a firefox desktop='^1'
 bspc rule -a Thunderbird desktop='^10'
@@ -64,3 +93,4 @@ bspc rule -a Spotify desktop='^9'
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
+

@@ -7,6 +7,7 @@ while [ $counter -lt 4 ]; do
 
   if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
       updates_arch=0
+      sleep 1
   else
     break
   fi
