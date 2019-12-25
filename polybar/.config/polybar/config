@@ -85,8 +85,8 @@ wm-restack = bspwm
 [module/date]
 type     = internal/date
 interval = 1.0
-date     = %Y-%m-%d
-date-alt = %Y-%m-%d
+date     = %a %Y-%m-%d
+date-alt = %A %Y-%m-%d
 time     = %H:%M
 time-alt = %H:%M:%S
 label    = %date% %time%
