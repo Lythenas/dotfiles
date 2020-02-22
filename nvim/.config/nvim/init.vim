@@ -68,6 +68,10 @@ Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 " TODO
 
+" Faster/Better folding
+" zuz to update all folds
+Plug 'Konfekt/FastFold'
+
 " Better writing support
 Plug 'reedes/vim-litecorrect'
 
