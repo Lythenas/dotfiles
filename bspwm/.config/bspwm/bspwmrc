@@ -1,5 +1,8 @@
 #! /bin/sh
 
+# clean up bspc
+bspc rule -r "*"
+
 echo "=> [$(date --rfc-3339=ns)] Setting up session and bspwm" >&2
 
 # Systemd --user does not properly support this usecase so I start and kill
@@ -7,12 +10,14 @@ echo "=> [$(date --rfc-3339=ns)] Setting up session and bspwm" >&2
 
 # starts an "app" if it is not already running
 start_app() {
+  echo "=> Starting app $@"
   pgrep "$1" || "$@" &
 }
 
 # kills (if it is already running) and starts a "service"
 # note this will kill all instance of the running "service"
 start_service() {
+  echo "=> Starting service $@"
   killall "$1"
   "$@" &
 }
@@ -23,7 +28,9 @@ start_service() {
 
 # keyboard shortcut daemon
 export SXHKD_SHELL=/usr/bin/bash
-start_service sxhkd
+SXHKD_FIFO=/run/user/$UID/sxhkd.fifo
+mkfifo $SXHKD_FIFO
+start_service sxhkd -s $SXHKD_FIFO
 
 # bars are handled by an extra script because the setup is a little more complex
 ~/.config/bspwm/bars.sh &
@@ -63,7 +70,7 @@ dbus-update-activation-environment \
 
 
 # TODO this is not ideal because it immediately calls the script
-mons -a -x ~/.config/bspwm/handle-monitor-change.sh &
+start_service mons -a -x ~/.config/bspwm/handle-monitor-change.sh
 
 #
 # bspwm setup
@@ -71,6 +78,9 @@ mons -a -x ~/.config/bspwm/handle-monitor-change.sh &
 
 bspc monitor eDP1 -d 1 2 3 4 5 6
 bspc monitor HDMI2 -d 7 8 9 0
+
+# bspc config remove_unplugged_monitors true
+# bspc config remove_disabled_monitors true
 
 bspc config border_width         2
 bspc config window_gap           0
@@ -84,6 +94,13 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 bspc config automatic_scheme longest_side
+
+bspc config focus_follows_pointer  false
+bspc config click_to_focus         button1
+bspc config honor_size_hints       true
+bspc config ignore_ewmh_focus      false
+bspc config ignore_ewmh_fullscreen none
+bspc config ignore_ewmh_struts     false
 
 # TODO some of these do not work
 bspc rule -a Gimp desktop='^8' state=floating follow=on
