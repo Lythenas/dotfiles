@@ -8,15 +8,15 @@ super + Return
 
 # program launcher
 super + @space
-  rofi -show run
+  rofi -modi drun -show drun -show-icons
 
 # window switcher (current desktop)
 super + @Tab
-  rofi -show windowcd
+  rofi -show windowcd -show-icons
 
 # window switcher (global)
 super + shift + @Tab
-  rofi -show window
+  rofi -show window -show-icons
 
 super + shift + @z
   ~/bin/lock
