@@ -1,10 +1,51 @@
-" vim: fdm=marker
-
-" GENERAL SET-TINGS {{{
-syntax on
-filetype plugin indent on
+" vim: ft=vim et fdm=marker
 
 set nocompatible
+
+" PLUGINS {{{
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'tpope/vim-sensible'
+" For speed
+" only update folds when needed
+Plug 'Konfekt/FastFold'
+" For color
+Plug 'chriskempson/base16-vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+" For status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" For features
+" NOTE: needs pip3 install --user pynvim
+Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'reedes/vim-litecorrect'
+Plug 'junegunn/vim-easy-align'
+" NOTE: install fzf using the distro package manager
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-surround'
+" For Git
+" signcolumn
+Plug 'mhinz/vim-signify'
+" management
+Plug 'tpope/vim-fugitive'
+" commit browser
+Plug 'junegunn/gv.vim'
+" For IDE features
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" For languages
+Plug 'sheerun/vim-polyglot'
+Plug 'elzr/vim-json'
+Plug 'ron-rs/ron.vim'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-latex/vim-latex'
+
+call plug#end()
+" PLUGINS }}}
+
+" GENERAL SET-TINGS {{{
 set updatetime=300
 " disable message for ins-completion-menu
 set shortmess+=c
@@ -16,15 +57,13 @@ set number
 set smartcase
 " better indentation
 set smartindent
-set autoindent
 " enable mouse support everywhere
 set mouse=a
-" better tabs
+" better tabs (default to 2 spaces for indentation)
 set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set smarttab
 " better cmdline completion
 set wildmode=longest:full
 set wildignorecase
@@ -33,46 +72,9 @@ set wildmenu
 set colorcolumn=80,100
 " better colors in terminal
 set termguicolors
-" }}}
-
-" PLUGINS {{{
-call plug#begin('~/.local/share/nvim/plugged')
-Plug 'chriskempson/base16-vim'
-" Status line
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" NOTE: needs pip3 install --user pynvim
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-" only update folds when needed
-Plug 'Konfekt/FastFold'
-Plug 'reedes/vim-litecorrect'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-" Color previews
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'junegunn/vim-easy-align'
-" NOTE: install fzf using the distro package manager
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-surround'
-" Languages
-Plug 'sheerun/vim-polyglot'
-Plug 'elzr/vim-json'
-Plug 'ron-rs/ron.vim'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-latex/vim-latex'
-" IDE features
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Git gutter
-Plug 'mhinz/vim-signify'
-" Git management
-Plug 'tpope/vim-fugitive'
-" Git commit browser
-Plug 'junegunn/gv.vim'
-
-call plug#end()
-" PLUGINS }}}
+" display some (probably unwanted) invisible characters
+set list
+" GENERAL SET-TINGS }}}
 
 " COLORSCHEME AND HIGHLIGHTING {{{
 " colorscheme
