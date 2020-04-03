@@ -1,0 +1,3 @@
+#!/bin/sh
+
+man $(apropos --long "${1:-.}" | dmenu -i -l 10 | awk '{print $2, $1}' | tr -d '()')
