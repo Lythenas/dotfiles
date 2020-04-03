@@ -33,9 +33,6 @@ window:
   # Setting this to false will result in window without borders and title bar.
   decorations: "full"
 
-# Display tabs using this many cells (changes require restart)
-tabspaces: 4
-
 # Font configuration (changes require restart)
 #
 # Important font attributes like antialiasing, subpixel aa, and hinting can be
@@ -58,17 +55,17 @@ tabspaces: 4
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Iosevka Nerd Font Mono
+    family: JetBrainsMono Nerd Font # Iosevka Nerd Font Mono
     style: Regular
 
   # The bold font face
   bold:
-    family: Iosevka Nerd Font Mono
+    family: JetBrainsMono Nerd Font # Iosevka Nerd Font Mono
     style: Bold
 
   # The italic font face
   italic:
-    family: Iosevka Nerd Font Mono
+    family: JetBrainsMono Nerd Font # Iosevka Nerd Font Mono
     style: Italic
 
   # Point size of the font
