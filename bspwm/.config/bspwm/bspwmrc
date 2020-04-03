@@ -1,26 +1,48 @@
-#! /bin/sh
+#!/usr/bin/env bash
+
+log() {
+  echo "=> [$(date --rfc-3339=ns)]" $@ >&2
+}
+
+log "Setting up session and bspwm"
+
+# For desktop config: touch ~/.config/bspwm/DESKTOP
+if [[ -e ~/.config/bspwm/DESKTOP ]]; then
+  export USE_DESKTOP_CONFIG=1
+  log "Using desktop config"
+fi
 
 # clean up bspc
 bspc rule -r "*"
 
-echo "=> [$(date --rfc-3339=ns)] Setting up session and bspwm" >&2
-
 # Systemd --user does not properly support this usecase so I start and kill
 # services and apps manually here.
 
+check_and_start() {
+  if which "$1" 2>/dev/null; then
+    "$@" &
+  else
+    log "ERROR: $1 was not found"
+  fi
+}
+
 # starts an "app" if it is not already running
 start_app() {
-  echo "=> Starting app $@"
-  pgrep "$1" || "$@" &
+  log "Starting app $@"
+  pgrep "$1" || check_and_start "$@"
 }
 
 # kills (if it is already running) and starts a "service"
 # note this will kill all instance of the running "service"
 start_service() {
-  echo "=> Starting service $@"
-  killall "$1"
-  "$@" &
+  log "Starting service $@"
+  killall "$1" 2>/dev/null
+  check_and_start "$@"
 }
+
+log "Setting common variables"
+export GTK_THEME=Adwaita:dark
+export GTK2_RC_FILES=Adwaita:dark
 
 #
 # services and apps are started (roughly) in order of importance
@@ -29,6 +51,7 @@ start_service() {
 # keyboard shortcut daemon
 export SXHKD_SHELL=/usr/bin/bash
 SXHKD_FIFO=/run/user/$UID/sxhkd.fifo
+rm -rf $SXHKD_FIFO
 mkfifo $SXHKD_FIFO
 start_service sxhkd -s $SXHKD_FIFO
 
@@ -68,16 +91,26 @@ start_app nm-applet --sm-disable
 dbus-update-activation-environment \
   --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
-
-# TODO this is not ideal because it immediately calls the script
-start_service mons -a -x ~/.config/bspwm/handle-monitor-change.sh
+if [ ! $USE_DESKTOP_CONFIG ]; then
+  # TODO this is not ideal because it immediately calls the script
+  start_service mons -a -x ~/.config/bspwm/handle-monitor-change.sh
+fi
 
 #
 # bspwm setup
 #
 
-bspc monitor eDP1 -d 1 2 3 4 5 6
-bspc monitor HDMI2 -d 7 8 9 0
+log "Setting desktops"
+
+if [ $USE_DESKTOP_CONFIG ]; then
+  bspc monitor "DP-2" -d 1 2 3 4 5 6
+  bspc monitor "DP-3" -d 7 8 9 0
+else
+  bspc monitor eDP1 -d 1 2 3 4 5 6
+  bspc monitor HDMI2 -d 7 8 9 0
+fi
+
+log "Setting configs"
 
 # bspc config remove_unplugged_monitors true
 # bspc config remove_disabled_monitors true
@@ -102,6 +135,8 @@ bspc config ignore_ewmh_focus      false
 bspc config ignore_ewmh_fullscreen none
 bspc config ignore_ewmh_struts     false
 
+log "Setting rules"
+
 # TODO some of these do not work
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a firefox desktop='^1'
@@ -110,4 +145,6 @@ bspc rule -a Spotify desktop='^9'
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
+
+bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
 

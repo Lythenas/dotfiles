@@ -49,7 +49,7 @@ padding-left       = 0
 padding-right      = 0
 module-margin-left = 0
 
-font-N = <fontconfig pattern>;<vertical offset>
+# font-N = <fontconfig pattern>;<vertical offset>
 # default font
 font-0 = scientifica:size=11;1
 #font-0 = Iosevka Nerd Font Mono:size=4;2
@@ -78,6 +78,26 @@ monitor = ${env:MONITOR:}
 wm-restack = bspwm
 
 
+[bar/base-desktop]
+inherit = bar/base
+dpi = 108
+
+# font-N = <fontconfig pattern>;<vertical offset>
+# default font
+font-0 = scientifica:size=11;1
+#font-0 = Iosevka Nerd Font Mono:size=4;2
+# alt fonts
+font-1 = lemon:pixelsize=10;1
+font-2 = NotoSansDisplay Nerd Font:size=6;2
+# for icons
+font-3 = Iosevka Nerd Font Mono:size=14;7
+font-4 = Iosevka Nerd Font Mono:size=20;5
+font-5 = Iosevka Nerd Font Mono:size=20;5
+
+modules-left = workspaces xwindow
+modules-right  = updates temp cpu ram volume network-desktop date
+modules-center = 
+
 ;--------------------------------------------
 ; modules                                   ;
 ;--------------------------------------------
@@ -94,7 +114,7 @@ label    = %date% %time%
 format         = <label>
 format-padding = 0
 format-prefix = 
-format-prefix-font = 4
+format-prefix-font = 5
 format-prefix-padding = 1
 format-prefix-background = ${colors.time_p_bg}
 format-prefix-foreground = ${colors.modules_prefix_fg}
@@ -214,6 +234,16 @@ ramp-signal-3 = 3
 ramp-signal-4 = 4
 ramp-signal-5 = 5
 
+[module/network-desktop]
+inherit = module/network
+interface = enp4s0
+
+format-connected = <label-connected>
+label-connected = %local_ip%
+
+format-connected-prefix = 直
+format-connected-prefix-font = 5
+
 [module/backlight]
 type = internal/xbacklight
 output = eDP1
@@ -244,7 +274,7 @@ mapped = true
 enable-scroll = false
 
 format-volume = <label-volume>
-label-volume            = "%{T4}墳%{T-} %percentage:3%%"
+label-volume            = "%{T5}墳%{T-} %percentage:3%%"
 label-volume-background = ${colors.bar_bg}
 label-volume-foreground = ${colors.bar_fg}
 label-volume-padding    = 1
@@ -268,7 +298,7 @@ label-foreground = ${colors.modules_fg}
 label-padding    = 1
 
 format-prefix = 
-format-prefix-font = 4
+format-prefix-font = 5
 
 format-prefix-padding    = 1
 format-prefix-background = ${colors.cpu_p_bg}
@@ -285,7 +315,7 @@ label-foreground = ${colors.modules_fg}
 label-padding    = 1
 
 format-prefix = 
-format-prefix-font = 4
+format-prefix-font = 5
 format-prefix-padding    = 1
 format-prefix-background = ${colors.ram_p_bg}
 format-prefix-foreground = ${colors.modules_prefix_fg}
@@ -418,10 +448,10 @@ label-occupied-background = ${colors.workspaces_bg}
 label-occupied-foreground = ${colors.workspaces_fg}
 label-occupied-padding = 1
 
-label-active            = %name%
-label-active-background = ${colors.workspaces_bg}
-label-active-foreground = ${colors.workspaces_active}
-label-active-padding    = 1
+label-focused            = %name%
+label-focused-background = ${colors.workspaces_bg}
+label-focused-foreground = ${colors.workspaces_active}
+label-focused-padding    = 1
 
 label-urgent            = %name%
 label-urgent-background = ${colors.workspaces_bg}
