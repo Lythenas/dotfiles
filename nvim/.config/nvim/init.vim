@@ -1,136 +1,219 @@
+" vim: fdm=marker
+
+" GENERAL SET-TINGS {{{
 syntax on
 filetype plugin indent on
 
 set nocompatible
-set hidden
 set updatetime=300
+" disable message for ins-completion-menu
 set shortmess+=c
+" always show signcolumn
 set signcolumn=yes
+" show line numbers
 set number
+" search is only case sensitive when there is an upper case character
 set smartcase
-set smarttab
+" better indentation
 set smartindent
 set autoindent
+" enable mouse support everywhere
+set mouse=a
+" better tabs
 set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set laststatus=0
-set mouse=a
+set smarttab
+" better cmdline completion
+set wildmode=longest:full
+set wildignorecase
+set wildmenu
+"
 set colorcolumn=80,100
+" better colors in terminal
 set termguicolors
+" }}}
 
-" colorscheme darkblue
-" hi Keyword ctermfg=darkcyan
-" hi Constant ctermfg=5*
-" hi Comment ctermfg=2*
-" hi Normal ctermbg=none
-" hi LineNr ctermfg=darkgrey
-
-""" PLUGINS
+" PLUGINS {{{
 call plug#begin('~/.local/share/nvim/plugged')
-
+Plug 'chriskempson/base16-vim'
 " Status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"set laststatus=2
-set noshowmode
-" :AirlineExtensions
-let g:airline#extensions#coc#enabled = 1
+" NOTE: needs pip3 install --user pynvim
+Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+" only update folds when needed
+Plug 'Konfekt/FastFold'
+Plug 'reedes/vim-litecorrect'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+" Color previews
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'junegunn/vim-easy-align'
+" NOTE: install fzf using the distro package manager
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-surround'
+" Languages
+Plug 'sheerun/vim-polyglot'
+Plug 'elzr/vim-json'
+Plug 'ron-rs/ron.vim'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-latex/vim-latex'
+" IDE features
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Git gutter
+Plug 'mhinz/vim-signify'
+" Git management
+Plug 'tpope/vim-fugitive'
+" Git commit browser
+Plug 'junegunn/gv.vim'
 
-" set colorscheme
-Plug 'chriskempson/base16-vim'
+call plug#end()
+" PLUGINS }}}
+
+" COLORSCHEME AND HIGHLIGHTING {{{
+" colorscheme
 set background=dark
-set laststatus=2
 let base16colorspace=256
+colorscheme base16-default-dark
 
-let g:airline_theme='base16'
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
+" highlight trailing whitespace
+highlight link ExtraWhitespace Error
+match ExtraWhitespace /\s\+$/
+" COLORSCHEME AND HIGHLIGHTING }}}
+
+" AIRLINE {{{
+set laststatus=2
+set noshowmode
+
 let g:airline_skip_empty_sections = 1
+" let g:airline_highlighting_cache = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+" only load these extensions (see :AirlineExtensions for a list of extensions)
+let g:airline#extensions#disable_rtp_load = 1
+let g:airline_extensions = [
+      \'branch',
+      \'coc',
+      \'denite',
+      \'fugitiveline',
+      \'hunks',
+      \'netrw',
+      \'quickfix',
+      \'tabline',
+      \'term',
+      \'whitespace',
+      \'wordcount']
+" TODO grepper, nerdtree, nrrwrgn, po, poetv, vimtex, vista
+let g:airline#extensions#branch#format = 2
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
-" overwrite defaults for gui nvim
-function! s:ui_enter()
-  if get(v:event, "chan") == 1
-    colorscheme evening
-    set guifont=Iosevka:h16
-    set linespace=2
-  endif
+" Make tab switchable by number using e.g. <leader>1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+
+" remove and change some symbols
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇ '
+let g:airline_symbols.whitespace = 'Ξ '
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+
+" AIRLINE }}}
+
+" DENITE {{{
+" Setup keybindings
+" <CR> do_action
+"
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>    denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> p       denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q       denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <Esc>   denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i       denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
 endfunction
 
-au UIEnter * call s:ui_enter()
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+  imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+endfunction
 
-" Denite
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
 
-" Defx Filebrowser
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+" DENITE }}}
+
+" DEFX {{{
 " TODO
+" DEFX }}}
 
-" Faster/Better folding
-" zuz to update all folds
-Plug 'Konfekt/FastFold'
+" FASTFOLD {{{
+" TODO nrrwrgn, (sessions)
+" FASTFOLD }}}
 
-" Better writing support
-Plug 'reedes/vim-litecorrect'
-
+" LIGHTCORRECT {{{
 augroup litecorrect
   autocmd!
   autocmd FileType markdown,md,mkd,pandoc call litecorrect#init()
 augroup END
+" LITECORRECT }}}
 
-" Goyo + Limelight
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-
+" GOYO {{{
 let g:limelight_conceal_ctermfg = 'gray'
 
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
+" GOYO }}}
 
-" Easy align
+" HEXOKINASE {{{
+let g:Hexokinase_highlighters = ['virtual']
+" HEXOKINASE }}}
+
+" EASYALIGN {{{
 " :EasyAlign
 " vipga=
-Plug 'junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+" EASYALIGN }}}
 
-" Fuzzy finder (FZF)
-" [Base plugin already installed using arch]
-" :Files :Colors etc.
-" NOTE: install fzf using the distro package manager
-Plug 'junegunn/fzf.vim'
-
-" Surround
+" SURROUND {{{
 " cs"' ds" ysiw] vS}
-Plug 'tpope/vim-surround'
+" SURROUND }}}
 
-""" LANGUAGES
-Plug 'sheerun/vim-polyglot'
+" LANGUAGES {{{
 let g:polyglot_disabled = []
 
 " JSON
-Plug 'elzr/vim-json'
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
-" Pandoc
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-
+" PANDOC
 let g:pandoc#folding#mode = 'stacked'
 let g:pandoc#syntax#conceal#use = 0
+" LANGUAGES }}}
 
-Plug 'vim-latex/vim-latex'
-
-" IDE features
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" IDE FEATURES (coc) {{{
 let g:coc_global_extensions = [ 'coc-json', 'coc-rls', 'coc-css', 'coc-vimlsp',
                               \ 'coc-svg', 'coc-emmet', 'coc-python',
                               \ 'coc-yaml', 'coc-html', 'coc-docker',
                               \ 'coc-sh', 'coc-markdownlint',
-                              \ 'coc-lists', 'coc-yank',
-                              \ 'coc-highlight']
+                              \ 'coc-lists', 'coc-yank']
 " other lsps configured in :CocConfig
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -178,50 +261,10 @@ nmap <leader>rn <Plug>(coc-rename)
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" IDE FEATURES }}}
 
-Plug 'Shougo/echodoc.vim'
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'echo'
-"let g:echodoc#type = 'floating'
-"highlight link EchoDocFloat Pmenu
-
-" Git gutter
-" Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
-" let g:signify_line_highlight = 1
-" let g:signify_update_on_bufenter = 1
+" GIT GUTTER {{{
+" use '[c' and ']c' to navigate hunks
 let g:signify_update_on_focusgained = 1
+" GIT GUTTER }}}
 
-" highlight lines in Sy and vimdiff etc.)
-highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119 gui=bold guibg=none guifg=#87ff5f
-highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167 gui=bold guibg=none guifg=#df5f5f
-highlight DiffChange        cterm=bold ctermbg=none ctermfg=227 gui=bold guibg=none guifg=#ffff5f
-
-" highlight signs in Sy
-highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119 gui=bold guibg=#3a3a3a guifg=#87ff5f
-highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167 gui=bold guibg=#3a3a3a guifg=#df5f5f
-highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227 gui=bold guibg=#3a3a3a guifg=#ffff5f
-
-highlight SignColumn ctermbg=none cterm=none guibg=none gui=none
-
-highlight link SignifySignAdd             SignifySignAdd
-highlight link SignifySignChange          SignifySignChange
-highlight link SignifySignDelete          SignifySignDelete
-
-" Git management
-Plug 'tpope/vim-fugitive'
-" Git commit browser
-Plug 'junegunn/gv.vim'
-
-" Tabular
-" allign blocks of code
-Plug 'godlygeek/tabular'
-nnoremap <leader>= :Tabularize /=<CR>
-nnoremap <leader>- :Tabularize /-><CR>
-nnoremap <leader>, :Tabularize /,<CR>
-nnoremap <leader># :Tabularize /#-}<CR>
-
-call plug#end()
-""" END PLUGINS
-
-colorscheme base16-default-dark
