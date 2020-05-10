@@ -94,7 +94,7 @@ font-3 = Iosevka Nerd Font Mono:size=14;7
 font-4 = Iosevka Nerd Font Mono:size=20;5
 font-5 = Iosevka Nerd Font Mono:size=20;5
 
-modules-left = workspaces xwindow
+modules-left = workspaces xwindow-desktop
 modules-right  = updates temp cpu ram volume network-desktop date
 modules-center = 
 
@@ -376,6 +376,10 @@ label         = %title%
 label-maxlen  = 80
 label-padding = 3
 label-font    = 3
+
+[module/xwindow-desktop]
+inherit = module/xwindow
+label-maxlen = 240
 
 [module/previous]
 type = custom/text
