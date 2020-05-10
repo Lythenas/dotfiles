@@ -12,6 +12,11 @@ if [[ -e ~/.config/bspwm/DESKTOP ]]; then
   log "Using desktop config"
 fi
 
+if  [[ -e ~/.config/bspwm/setup_monitors.sh ]]; then
+    log "Setting up monitos"
+    ~/.config/bspwm/setup_monitors.sh
+fi
+
 # clean up bspc
 bspc rule -r "*"
 
@@ -138,13 +143,23 @@ bspc config ignore_ewmh_struts     false
 log "Setting rules"
 
 # TODO some of these do not work
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a firefox desktop='^1'
-bspc rule -a Thunderbird desktop='^10'
-bspc rule -a Spotify desktop='^9'
+bspc rule -a Gimp state=floating follow=on
+bspc rule -a firefox -o desktop='7'
+bspc rule -a discord desktop='8'
+bspc rule -a Thunderbird desktop='6'
+bspc rule -a Spotify desktop='9'
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
+bspc rule -a Brave-browser desktop='7'
+
+# games
+bspc rule -a geometrydash.exe state=floating
+bspc rule -a "origin.exe" state=floating
 
 bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
 
+log "Starting common apps"
+start_app firefox
+start_app brave
+start_app thunderbird

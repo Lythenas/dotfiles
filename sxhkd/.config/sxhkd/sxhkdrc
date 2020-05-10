@@ -107,8 +107,12 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-  bspc node -{f,s} {west,south,north,east}
+super + {h,j,k,l}
+  bspc node -f {west,south,north,east}
+
+# smart move the node in the given direction
+super + shift + {h,j,k,l}
+  ~/.config/bspwm/scripts/smart_move {west,south,north,east}
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -164,14 +168,14 @@ super + ctrl + shift + space
 # move/resize
 #
 
-# expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
-  bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-# contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
-  bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+    ~/.config/bspwm/scripts/resize {west,north,south,east} 50
 
 # move a floating window
 super + {Left,Down,Up,Right}
   bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# rotate all windows (counter-)clockwise by 90 degrees.
+super + {_,shift + }r
+  bspc node @/ --rotate {90,-90}
+
