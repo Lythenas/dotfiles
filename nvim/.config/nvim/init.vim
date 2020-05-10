@@ -5,26 +5,36 @@ set nocompatible
 " PLUGINS {{{
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-sensible'
+
 " For speed
 " only update folds when needed
 Plug 'Konfekt/FastFold'
-" For color
+
+" For color/visuals
 Plug 'chriskempson/base16-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'Konfekt/FoldText'
+
 " For status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
 " For features
 " NOTE: needs pip3 install --user pynvim
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Editing
 Plug 'reedes/vim-litecorrect'
 Plug 'junegunn/vim-easy-align'
-" NOTE: install fzf using the distro package manager
-Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
+Plug 'tomtom/tcomment_vim'
+Plug 'christoomey/vim-titlecase'
+"
+Plug 'mbbill/undotree'
+
 " For Git
 " signcolumn
 Plug 'mhinz/vim-signify'
@@ -32,15 +42,24 @@ Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 " commit browser
 Plug 'junegunn/gv.vim'
+
 " For IDE features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 " For languages
+Plug 'godlygeek/tabular' " needed for markdown and generally good
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'sheerun/vim-polyglot'
 Plug 'elzr/vim-json'
 Plug 'ron-rs/ron.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-latex/vim-latex'
+
+" Vimwiki
+Plug 'lervag/wiki.vim'
+Plug 'gyim/vim-boxdraw'
 
 call plug#end()
 " PLUGINS }}}
@@ -53,22 +72,25 @@ set shortmess+=c
 set signcolumn=yes
 " show line numbers
 set number
+set relativenumber
 " search is only case sensitive when there is an upper case character
 set smartcase
 " better indentation
 set smartindent
 " enable mouse support everywhere
 set mouse=a
-" better tabs (default to 2 spaces for indentation)
+" better tabs (default to 2 spaces for indentation, but display existing tabs
+" as 8 spaces)
 set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=8
+set shiftwidth=4
+set softtabstop=4
 " better cmdline completion
-set wildmode=longest:full
+set wildmode=longest:full,full
 set wildignorecase
 set wildmenu
 "
+set cursorline
 set colorcolumn=80,100
 " better colors in terminal
 set termguicolors
@@ -158,7 +180,12 @@ function! s:denite_filter_my_settings() abort
   imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
 endfunction
 
+" use ripgrep to list files (respects .gitignore)
 call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
+" use ripgrep in place of grep
+"  - search hidden and case insensitively if pattern is all lowercase
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
 
 " DENITE }}}
 
@@ -210,12 +237,17 @@ let g:pandoc#folding#mode = 'stacked'
 let g:pandoc#syntax#conceal#use = 0
 " LANGUAGES }}}
 
+" SNIPPETS {{{
+
+" SNIPPETS }}}
+
 " IDE FEATURES (coc) {{{
-let g:coc_global_extensions = [ 'coc-json', 'coc-rls', 'coc-css', 'coc-vimlsp',
+let g:coc_global_extensions = [ 'coc-json', 'coc-rust-analyzer', 'coc-css', 'coc-vimlsp',
+                              \ 'coc-clangd',
                               \ 'coc-svg', 'coc-emmet', 'coc-python',
                               \ 'coc-yaml', 'coc-html', 'coc-docker',
                               \ 'coc-sh', 'coc-markdownlint',
-                              \ 'coc-lists', 'coc-yank']
+                              \ 'coc-lists', 'coc-yank', 'coc-ultisnips']
 " other lsps configured in :CocConfig
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -270,3 +302,77 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 let g:signify_update_on_focusgained = 1
 " GIT GUTTER }}}
 
+" WIKI {{{
+let g:wiki_root = '~/wiki'
+let g:wiki_filetypes = ['md', 'wiki']
+let g:wiki_link_target_type = 'md'
+" let g:wiki_mappings_use_defaults = 'local'
+" WIKI }}}
+
+" MISC IMPROVEMENTS {{{
+
+" move selected lines in visual mode
+vnoremap J :m '>+1<CR>gv
+vnoremap K :m '<-2<CR>gv
+
+" easier window switching
+nmap <C-h> <C-W>h
+nmap <C-J> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-l> <C-W>l
+
+" make substitution repeat to reuse last flags
+nnoremap & :&&<cr>
+xnoremap & :&&<cr>
+
+" highlight matches when jumping to next
+nnoremap <silent> n n:call HLNext(0.2)<cr>
+nnoremap <silent> N N:call HLNext(0.2)<cr>
+
+" function! HLNext (blinktime)
+"     highlight BlackOnBlack ctermfg=black ctermbg=black guibg=bg guifg=bg
+"     let [bufnum, lnum, col, off] = getpos('.')
+"     let matchlen = strlen(matchstr(strpart(getline('.'), col-1), @/))
+"     let hide_pat = '\%<'.lnum.'l.'
+"             \ . '\|'
+"             \ . '\%'.lnum.'l\%<'.col.'v.'
+"             \ . '\|'
+"             \ . '\%'.lnum.'l\%>'.(col+matchlen-1).'v.'
+"             \ . '\|'
+"             \ . '\%>'.lnum.'l.'
+"     let ring = matchadd('BlackOnBlack', hide_pat, 101)
+"     redraw
+"     exec 'sleep ' .float2nr(a:blinktime * 1000) . 'm'
+"     call matchdelete(ring)
+"     redraw
+" endfunction
+
+function! HLNext (blinktime)
+    highlight HLNext gui=bold,underline,standout guifg=white guibg=black
+    let [bufnum, lnum, col, off] = getpos('.')
+    let matchlen = strlen(matchstr(strpart(getline('.'), col-1), @/))
+    let target_pat = '\c\%#'.@/
+    let ring = matchadd('HLNext', target_pat, 101)
+    redraw
+    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    call matchdelete(ring)
+    redraw
+endfunction
+
+" MISC_IMPROVEMENTS }}}
+
+" VIM MAPPING REMINDER {{{
+"
+" Commenting:
+"  > tcomment
+" gcc gc{motion} g>{motion} g<{motion}
+"
+" Titlecaseing:
+"  > titlecase
+" gt{motion} gT
+"
+" Undotree:
+"  > undotree.txt
+" :UndotreeToggle
+"
+" VIM MAPPING REMINDER }}}
