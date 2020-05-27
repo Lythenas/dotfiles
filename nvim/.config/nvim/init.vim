@@ -64,6 +64,8 @@ Plug 'gyim/vim-boxdraw'
 call plug#end()
 " PLUGINS }}}
 
+filetype plugin indent on
+
 " GENERAL SET-TINGS {{{
 set updatetime=300
 " disable message for ins-completion-menu
@@ -76,7 +78,8 @@ set relativenumber
 " search is only case sensitive when there is an upper case character
 set smartcase
 " better indentation
-set smartindent
+set autoindent
+"set smartindent
 " enable mouse support everywhere
 set mouse=a
 " better tabs (default to 2 spaces for indentation, but display existing tabs
