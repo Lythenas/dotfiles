@@ -290,7 +290,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -298,6 +298,38 @@ nmap <leader>rn <Plug>(coc-rename)
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" do code action in selected region
+" e.g. <leader>aap for current paragraph
+xmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
+
+" auto fix problem on current line
+nmap <leader>qf <Plug>(coc-fix-current)
+
+" use tab to select range (needs server support)
+" TODO needs different key bindings and also in visual mode
+" xmap <silent> <TAB> <Plug>(coc-range-select)
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+
+" TODO
+" format
+" organize imports
+
+" shortcuts to coc lists:
+nnoremap <silent> <leader>a :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>c :<C-u>CocList commands<cr>
+nnoremap <silent> <leader>o :<C-u>CocList outline<cr>
+" workspace symbols
+nnoremap <silent> <leader>s :<C-u>CocList -I symbols<cr>
+" do default action for next/prev item
+nnoremap <silent> <leader>j :<C-u>CocNext<cr>
+nnoremap <silent> <leader>k :<C-u>CocNext<cr>
+" bring up last list
+nnoremap <silent> <leader>p :<C-u>CocListResume<cr>
+
+
 " IDE FEATURES }}}
 
 " GIT GUTTER {{{
