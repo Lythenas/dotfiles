@@ -156,10 +156,10 @@ bspc rule -a Brave-browser desktop='7'
 # games
 bspc rule -a geometrydash.exe state=floating
 bspc rule -a "origin.exe" state=floating
+bspc rule -a "Origin.exe" state=floating
 
 bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
 
 log "Starting common apps"
 start_app firefox
-start_app brave
 start_app thunderbird
