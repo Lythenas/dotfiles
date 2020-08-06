@@ -52,10 +52,18 @@
     spacing: 1%;
 }
 #message {
-    border: 2px; 
-    padding: 1em; 
-    background-color: @background; 
+    border: 2px;
+    padding: 1em;
+    background-color: @background;
     text-color: @forground;
+}
+#error-message {
+    spacing: 0;
+    border: 2px;
+    padding: 0.5em 1em;
+    background-color: @normal-background;
+    text-color: @normal-foreground;
+    index: 0;
 }
 #textbox normal {
     text-color: @foreground;
@@ -69,7 +77,7 @@
     reverse: false;
 
     columns: 1;
-    background-color: @background; 
+    background-color: @background;
 }
 #element {
     border: 0;
