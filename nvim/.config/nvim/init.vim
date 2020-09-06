@@ -272,6 +272,8 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
+" autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -298,6 +300,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>i <Plug>(coc-diagnostic-info)
 
 " do code action in selected region
 " e.g. <leader>aap for current paragraph
@@ -312,6 +315,10 @@ nmap <leader>qf <Plug>(coc-fix-current)
 " xmap <silent> <TAB> <Plug>(coc-range-select)
 " nmap <silent> <TAB> <Plug>(coc-range-select)
 " xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+
+vmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
+command! -nargs=0 Format :call CocAction('format')
 
 " format
 xmap <leader>f <Plug>(coc-format-selected)
@@ -331,7 +338,6 @@ nnoremap <silent> <leader>j :<C-u>CocNext<cr>
 nnoremap <silent> <leader>k :<C-u>CocNext<cr>
 " bring up last list
 nnoremap <silent> <leader>p :<C-u>CocListResume<cr>
-
 
 " IDE FEATURES }}}
 

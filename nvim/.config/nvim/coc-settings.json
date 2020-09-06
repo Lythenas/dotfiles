@@ -47,5 +47,7 @@
         }
       }
     }
-  }
+  },
+  "diagnostic.enableMessage": "jump",
+  "clangd.trace.server": "verbose"
 }
