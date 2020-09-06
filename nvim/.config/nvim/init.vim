@@ -246,7 +246,7 @@ let g:pandoc#syntax#conceal#use = 0
 
 " IDE FEATURES (coc) {{{
 let g:coc_global_extensions = [ 'coc-json', 'coc-rust-analyzer', 'coc-css', 'coc-vimlsp',
-                              \ 'coc-clangd',
+                              \ 'coc-clangd', 'coc-cmake',
                               \ 'coc-svg', 'coc-emmet', 'coc-python',
                               \ 'coc-yaml', 'coc-html', 'coc-docker',
                               \ 'coc-sh', 'coc-markdownlint',
@@ -313,8 +313,11 @@ nmap <leader>qf <Plug>(coc-fix-current)
 " nmap <silent> <TAB> <Plug>(coc-range-select)
 " xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
-" TODO
 " format
+xmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
+
+" TODO
 " organize imports
 
 " shortcuts to coc lists:
