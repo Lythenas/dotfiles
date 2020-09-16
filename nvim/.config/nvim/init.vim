@@ -42,6 +42,8 @@ Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 " commit browser
 Plug 'junegunn/gv.vim'
+" conflicts
+Plug 'rhysd/conflict-marker.vim'
 
 " For IDE features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -51,11 +53,14 @@ Plug 'honza/vim-snippets'
 " For languages
 Plug 'godlygeek/tabular' " needed for markdown and generally good
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'flw-cn/vim-markdown'
+let g:polyglot_disabled = ['markdown']
 Plug 'sheerun/vim-polyglot'
 Plug 'elzr/vim-json'
 Plug 'ron-rs/ron.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Vimwiki
 Plug 'lervag/wiki.vim'
@@ -70,6 +75,8 @@ filetype plugin indent on
 set updatetime=300
 " disable message for ins-completion-menu
 set shortmess+=c
+" keep undo history when switching buffers
+set hidden
 " always show signcolumn
 set signcolumn=yes
 " show line numbers
@@ -230,7 +237,6 @@ nmap ga <Plug>(EasyAlign)
 " SURROUND }}}
 
 " LANGUAGES {{{
-let g:polyglot_disabled = []
 
 " JSON
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -238,6 +244,12 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " PANDOC
 let g:pandoc#folding#mode = 'stacked'
 let g:pandoc#syntax#conceal#use = 0
+
+" C++ semantic highlighting
+highlight link LspCxxHlSymNamespace Comment
+highlight LspCxxHlSymParameter ctermfg=Green guifg=#259161 cterm=none gui=none
+highlight LspCxxHlSymTemplateParameter ctermfg=DarkYellow guifg=#e57500 cterm=none gui=none
+
 " LANGUAGES }}}
 
 " SNIPPETS {{{
