@@ -87,6 +87,9 @@ start_service dunst
 # set background
 feh --no-fehbg --bg-fill ~/.config/bspwm/wallpaper.jpg &
 
+# authentication agent
+start_service lxpolkit
+
 # start other apps
 start_app syncthing-gtk
 start_app nm-applet --sm-disable
