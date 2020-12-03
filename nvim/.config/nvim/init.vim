@@ -35,6 +35,10 @@ Plug 'christoomey/vim-titlecase'
 "
 Plug 'mbbill/undotree'
 
+" Navigation
+Plug 'unblevable/quick-scope'
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] " highlight on these key presses
+
 " For Git
 " signcolumn
 Plug 'mhinz/vim-signify'
@@ -382,8 +386,8 @@ nnoremap & :&&<cr>
 xnoremap & :&&<cr>
 
 " highlight matches when jumping to next
-nnoremap <silent> n n:call HLNext(0.2)<cr>
-nnoremap <silent> N N:call HLNext(0.2)<cr>
+" nnoremap <silent> n n:call HLNext(0.2)<cr>
+" nnoremap <silent> N N:call HLNext(0.2)<cr>
 
 " function! HLNext (blinktime)
 "     highlight BlackOnBlack ctermfg=black ctermbg=black guibg=bg guifg=bg
@@ -403,17 +407,17 @@ nnoremap <silent> N N:call HLNext(0.2)<cr>
 "     redraw
 " endfunction
 
-function! HLNext (blinktime)
-    highlight HLNext gui=bold,underline,standout guifg=white guibg=black
-    let [bufnum, lnum, col, off] = getpos('.')
-    let matchlen = strlen(matchstr(strpart(getline('.'), col-1), @/))
-    let target_pat = '\c\%#'.@/
-    let ring = matchadd('HLNext', target_pat, 101)
-    redraw
-    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-    call matchdelete(ring)
-    redraw
-endfunction
+" function! HLNext (blinktime)
+"     highlight HLNext gui=bold,underline,standout guifg=white guibg=black
+"     let [bufnum, lnum, col, off] = getpos('.')
+"     let matchlen = strlen(matchstr(strpart(getline('.'), col-1), @/))
+"     let target_pat = '\c\%#'.@/
+"     let ring = matchadd('HLNext', target_pat, 101)
+"     redraw
+"     exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+"     call matchdelete(ring)
+"     redraw
+" endfunction
 
 " MISC_IMPROVEMENTS }}}
 
