@@ -320,8 +320,9 @@ nmap <silent> <leader>i <Plug>(coc-diagnostic-info)
 
 " do code action in selected region
 " e.g. <leader>aap for current paragraph
-xmap <leader>a <Plug>(coc-codeaction-selected)
-nmap <leader>a <Plug>(coc-codeaction-selected)
+xmap <leader>a <Plug>(coc-codeaction-line)
+nmap <leader>a <Plug>(coc-codeaction-line)
+vmap <leader>a <Plug>(coc-codeaction-selected)
 
 " auto fix problem on current line
 nmap <leader>qf <Plug>(coc-fix-current)
@@ -344,7 +345,7 @@ nmap <leader>f <Plug>(coc-format-selected)
 " organize imports
 
 " shortcuts to coc lists:
-nnoremap <silent> <leader>a :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <leader>c :<C-u>CocList commands<cr>
 nnoremap <silent> <leader>o :<C-u>CocList outline<cr>
 " workspace symbols

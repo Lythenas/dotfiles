@@ -48,6 +48,7 @@
       }
     }
   },
-  "diagnostic.enableMessage": "jump",
-  "clangd.trace.server": "verbose"
+  "diagnostic.enableMessage": "always",
+  "clangd.trace.server": "verbose",
+  "rust-analyzer.procMacro.enable": true
 }
