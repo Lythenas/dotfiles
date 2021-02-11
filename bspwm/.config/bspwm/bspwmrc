@@ -53,6 +53,19 @@ export GTK2_RC_FILES=Adwaita:dark
 # services and apps are started (roughly) in order of importance
 #
 
+# ssh agent
+if which ssh-agent 2>/dev/null; then
+    eval `ssh-agent`
+    if which x11-ssh-askpass 2>/dev/null; then
+        SSH_ASKPASS=/usr/lib/openssh/x11-ssh-askpass ssh-add < /dev/null
+    else
+        log "ERROR: x11-ssh-askpass was not found"
+    fi
+    ssh-add ~/.ssh/id_rsa
+else
+    log "ERROR: ssh-agent was not found"
+fi
+
 # keyboard shortcut daemon
 export SXHKD_SHELL=/usr/bin/bash
 SXHKD_FIFO=/run/user/$UID/sxhkd.fifo
