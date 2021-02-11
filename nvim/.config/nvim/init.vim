@@ -43,7 +43,8 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] " highlight on these key press
 " signcolumn
 Plug 'mhinz/vim-signify'
 " management
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
+Plug 'lambdalisue/gina.vim'
 " commit browser
 Plug 'junegunn/gv.vim'
 " conflicts
