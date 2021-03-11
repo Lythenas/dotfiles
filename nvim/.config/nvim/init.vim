@@ -43,8 +43,8 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] " highlight on these key press
 " signcolumn
 Plug 'mhinz/vim-signify'
 " management
-" Plug 'tpope/vim-fugitive'
-Plug 'lambdalisue/gina.vim'
+Plug 'tpope/vim-fugitive'
+" Plug 'lambdalisue/gina.vim'
 " commit browser
 Plug 'junegunn/gv.vim'
 " conflicts
@@ -66,6 +66,7 @@ Plug 'ron-rs/ron.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'tridactyl/vim-tridactyl'
 
 " Vimwiki
 Plug 'lervag/wiki.vim'
@@ -122,6 +123,20 @@ colorscheme base16-default-dark
 " highlight trailing whitespace
 highlight link ExtraWhitespace Error
 match ExtraWhitespace /\s\+$/
+
+" highlight git conflicts
+" disable the default highlight group
+let g:conflict_marker_highlight_group = ''
+" Include text after begin and end markers
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end   = '^>>>>>>> .*$'
+" set highlight groups
+highlight ConflictMarkerBegin guibg=#2f7366
+highlight ConflictMarkerOurs guibg=#2e5049
+highlight ConflictMarkerTheirs guibg=#344f69
+highlight ConflictMarkerEnd guibg=#2f628e
+highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+
 " COLORSCHEME AND HIGHLIGHTING }}}
 
 " AIRLINE {{{
@@ -386,6 +401,9 @@ nmap <C-l> <C-W>l
 " make substitution repeat to reuse last flags
 nnoremap & :&&<cr>
 xnoremap & :&&<cr>
+
+" make Esc exit terminal-mode
+tnoremap <Esc> <C-\><C-n>
 
 " highlight matches when jumping to next
 " nnoremap <silent> n n:call HLNext(0.2)<cr>
