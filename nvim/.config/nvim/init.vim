@@ -6,6 +6,10 @@ set nocompatible
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-sensible'
 
+" dependencies
+Plug 'tpope/vim-dispatch'
+Plug 'radenling/vim-dispatch-neovim'
+
 " For speed
 " only update folds when needed
 Plug 'Konfekt/FastFold'
@@ -67,6 +71,10 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'tridactyl/vim-tridactyl'
+" Closure (etc.)
+Plug 'eraserhd/parinfer-rust', { 'do': 'cargo build --release' }
+Plug 'Olical/conjure', {'tag': 'v4.15.0'}
+Plug 'clojure-vim/vim-jack-in'
 
 " Vimwiki
 Plug 'lervag/wiki.vim'
@@ -136,6 +144,26 @@ highlight ConflictMarkerOurs guibg=#2e5049
 highlight ConflictMarkerTheirs guibg=#344f69
 highlight ConflictMarkerEnd guibg=#2f628e
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+
+" fade out delimiters like parens, brackets, braces
+highlight Delimiter guifg=#505050
+" better color for matching parens
+highlight MatchParen guibg=#505050 guifg=#a0a0a0
+
+" cursor color
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i-ci-ve:ver25-Cursor
+
+function! SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
 
 " COLORSCHEME AND HIGHLIGHTING }}}
 
